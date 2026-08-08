@@ -1,10 +1,19 @@
 ---
+import { Image } from "astro:assets";
+import portrait from "../assets/portrait.jpg";
 ---
 
 <header class="header">
 	<div class="identity">
-		<!-- Emplacement portrait 140x140 — à remplacer par une vraie photo (voir demande en cours). -->
-		<div class="portrait" role="img" aria-label="Portrait de Nicolas Pruneau">Photo</div>
+		<Image
+			src={portrait}
+			alt="Portrait de Nicolas Pruneau"
+			width={140}
+			height={140}
+			format="webp"
+			quality={85}
+			class="portrait"
+		/>
 		<div>
 			<div class="name">Nicolas Pruneau</div>
 			<div class="tagline">Étudiant ingénieur civil en informatique, sites web et outils sur mesure</div>
@@ -35,19 +44,12 @@
 		max-width: 520px;
 	}
 
-	.portrait {
+	:global(.portrait) {
 		width: 140px;
 		height: 140px;
 		flex: 0 0 140px;
 		border-radius: 999px;
-		background: var(--paper-alt);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-family: var(--font-sans);
-		font-size: 13px;
-		color: var(--ink);
-		opacity: 0.5;
+		object-fit: cover;
 	}
 
 	.name {
