@@ -1,0 +1,141 @@
+---
+import SectionMeta from "./SectionMeta.astro";
+
+const services = [
+	{
+		number: "01",
+		title: "Un site qui vous représente",
+		text: "Un site vitrine sur mesure, rapide, lisible sur téléphone, qui dit clairement ce que vous faites et permet qu'on vous contacte. Pas de gabarit acheté et repeint : votre site est construit pour votre activité.",
+		offset: "0px",
+	},
+	{
+		number: "02",
+		title: "Un outil qui vous fait gagner du temps",
+		text: "Vous répétez chaque semaine la même manipulation dans un tableur. Vous recopiez des données d'un système vers un autre. Vous compilez un rapport à la main. Ce sont des heures récupérables, et le programme qui les récupère se construit souvent en quelques jours.",
+		offset: "clamp(0px, 3vw, 36px)",
+	},
+	{
+		number: "03",
+		title: "Une première version de votre projet",
+		text: "Vous avez une idée mais rien de tangible à montrer. Un prototype fonctionnel permet de la tester, de la présenter, et de savoir si elle tient debout avant d'y engager un vrai budget.",
+		offset: "clamp(0px, 6vw, 72px)",
+	},
+];
+---
+
+<section class="services">
+	<SectionMeta numeral="i" label="Ce que je fais" note="Trois portes d'entrée, pas trois forfaits." />
+	<div class="content">
+		<h2>Ce que je fais<span class="dot">.</span></h2>
+		<p class="lead">
+			Trois portes d'entrée. Aucune n'est limitative : si votre besoin ne rentre dans aucune case,
+			c'est probablement qu'il mérite une discussion.
+		</p>
+
+		<div class="panels">
+			{
+				services.map((service) => (
+					<div class="panel" data-reveal data-glow style={`margin-left: ${service.offset};`}>
+						<div class="glow-layer" data-glow-layer />
+						<div class="number">{service.number}</div>
+						<h3>{service.title}</h3>
+						<p>{service.text}</p>
+					</div>
+				))
+			}
+		</div>
+
+		<p class="tech-note">
+			Techniquement : Python, Django, FastAPI, Node.js, React, Docker, WordPress lorsque c'est le
+			bon choix. Cette liste n'a rien de fermé : la première compétence d'un ingénieur est de
+			s'adapter à un problème qu'il n'a pas encore rencontré.
+		</p>
+	</div>
+</section>
+
+<style>
+	.services {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 24px 56px;
+		padding: var(--section-pad) 0;
+		border-top: 1px solid var(--paper-alt);
+	}
+
+	.content {
+		flex: 999 1 460px;
+		max-width: 700px;
+	}
+
+	h2 {
+		margin: 0 0 24px;
+		font-size: clamp(30px, 4.4vw, 48px);
+		font-weight: 400;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+	}
+
+	.dot {
+		color: var(--highlight);
+	}
+
+	.lead {
+		margin: 0;
+		font-size: 21px;
+		line-height: 1.5;
+		max-width: 58ch;
+	}
+
+	.panels {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin-top: 36px;
+	}
+
+	.panel {
+		padding: clamp(22px, 3vw, 30px);
+		border: 1px solid var(--paper-alt);
+		border-radius: 24px;
+		background: var(--paper);
+		transition:
+			transform 600ms var(--ease),
+			background 560ms var(--ease),
+			border-color 560ms var(--ease);
+	}
+
+	.panel:hover {
+		border-color: var(--highlight);
+		transform: translateY(-4px);
+	}
+
+	.number {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		letter-spacing: 0.06em;
+		color: var(--highlight);
+		margin-bottom: 12px;
+	}
+
+	.panel h3 {
+		margin: 0;
+		font-size: 22px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.panel p {
+		margin: 10px 0 0;
+		font-size: 18.5px;
+		line-height: 1.65;
+		max-width: 63ch;
+	}
+
+	.tech-note {
+		margin: 28px 0 0;
+		font-size: 16.5px;
+		line-height: 1.65;
+		max-width: 62ch;
+		opacity: 0.78;
+	}
+</style>

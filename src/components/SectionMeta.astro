@@ -1,0 +1,67 @@
+---
+interface Props {
+	numeral: string;
+	label: string;
+	note: string;
+}
+
+const { numeral, label, note } = Astro.props;
+---
+
+<div class="gutter">
+	<div class="gutter-head">
+		<span class="numeral">{numeral}</span>
+		<span class="label">{label}</span>
+	</div>
+	<div class="rule"></div>
+	<p class="note">{note}</p>
+</div>
+
+<style>
+	.gutter {
+		flex: 1 1 132px;
+		display: flex;
+		flex-wrap: wrap;
+		align-content: flex-start;
+		gap: 10px 20px;
+	}
+
+	.gutter-head {
+		display: flex;
+		gap: 9px;
+		align-items: baseline;
+	}
+
+	.numeral {
+		font-family: var(--font-sans);
+		font-size: 11.5px;
+		color: var(--highlight);
+	}
+
+	.label {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		letter-spacing: 0.06em;
+		color: var(--accent);
+	}
+
+	.rule {
+		flex: 0 0 auto;
+		width: 20px;
+		border-top: 1px solid var(--highlight);
+		margin-top: 12px;
+		align-self: center;
+	}
+
+	.note {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 14.5px;
+		line-height: 1.5;
+		margin: 0;
+		opacity: 0.58;
+		flex: 1 1 132px;
+		min-width: 132px;
+		max-width: 46ch;
+	}
+</style>

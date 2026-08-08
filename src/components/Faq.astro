@@ -1,0 +1,173 @@
+---
+import SectionMeta from "./SectionMeta.astro";
+
+const items = [
+	{
+		question: "Vous êtes étudiant. C'est un risque pour moi ?",
+		answer:
+			"C'est une question légitime, alors autant y répondre franchement. Je démarre mon activité et je construis mon portfolio, mes tarifs en tiennent compte, et vous en profitez. En contrepartie, vous avez quelqu'un qui a tout intérêt à ce que votre projet soit une réussite, parce que c'est aussi ma référence de demain. Concrètement, vous êtes protégé par un périmètre écrit, une maquette que vous validez avant tout développement, et un paiement échelonné : à chaque étape, vous voyez le travail accompli avant de régler la suivante. Le code de ce site est d'ailleurs public sur GitHub : vous pouvez juger de mon travail avant même de me contacter.",
+	},
+	{
+		question: "Je ne sais pas exactement ce que je veux. C'est un problème ?",
+		answer:
+			"Non, c'est le cas le plus courant. Cadrer un besoin flou fait partie du travail, et c'est même souvent la partie la plus utile. Venez avec le problème, pas avec la solution.",
+	},
+	{
+		question: "À qui appartient le site ?",
+		answer:
+			"À vous, entièrement. Le nom de domaine est enregistré à votre nom, le code vous est remis. Vous pouvez changer de prestataire quand vous voulez, sans rien perdre. Aucun abonnement obligatoire, aucune plateforme dont vous ne pourriez pas sortir.",
+	},
+	{
+		question: "Pourrai-je modifier mes textes moi-même ?",
+		answer:
+			"Comme vous le souhaitez. Soit vous m'envoyez les modifications et je m'en occupe, c'est le plus simple et le plus rapide. Soit je prévois une interface d'administration, ce qui ajoute au budget mais vous rend autonome. On en discute avant, pas après.",
+	},
+	{
+		question: "Combien de temps faut-il ?",
+		answer:
+			"Comptez trois à quatre semaines pour un site vitrine à partir du moment où les contenus sont prêts. Le délai précis est indiqué dans la proposition et il m'engage. Étant étudiant, mes disponibilités varient selon les périodes d'examens, je vous le dis avant de m'engager, jamais après.",
+	},
+	{
+		question: "Et après la mise en ligne ?",
+		answer:
+			"Un site n'est pas un objet figé. Vous pouvez me confier l'hébergement et le suivi, ou reprendre entièrement la main. Aucun engagement de durée dans les deux cas.",
+	},
+	{
+		question: "Vous ne faites vraiment que des sites ?",
+		answer:
+			"Non, et c'est même ce qui m'intéresse le plus. Un site vitrine est un projet parmi d'autres. J'ai développé un outil d'aide à l'analyse de conformité pour un cabinet de réviseurs d'entreprises, ainsi que des automatisations de traitement de données. Si votre besoin ressemble davantage à « je perds du temps sur ce processus » qu'à « il me faut un site », c'est exactement le genre de sujet dont j'aimerais entendre parler.",
+	},
+];
+---
+
+<section class="faq">
+	<SectionMeta numeral="iv" label="Questions fréquentes" note="Celles qu'on me pose vraiment, dont les gênantes." />
+	<div class="content">
+		<h2>Questions fréquentes<span class="dot">.</span></h2>
+		<div class="list">
+			{
+				items.map((item, index) => (
+					<div class="item" data-faq-item>
+						<button
+							type="button"
+							class="trigger"
+							data-faq-trigger
+							aria-expanded={index === 0 ? "true" : "false"}
+							aria-controls={`faq-panel-${index}`}
+							id={`faq-trigger-${index}`}
+						>
+							<span class="question">{item.question}</span>
+							<span class="marker" data-faq-marker aria-hidden="true">
+								{index === 0 ? "–" : "+"}
+							</span>
+						</button>
+						<div
+							class="panel"
+							data-faq-panel
+							id={`faq-panel-${index}`}
+							role="region"
+							aria-labelledby={`faq-trigger-${index}`}
+						>
+							<p>
+								<span class="panel-text">{item.answer}</span>
+							</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.faq {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 24px 56px;
+		padding: var(--section-pad) 0;
+		border-top: 1px solid var(--paper-alt);
+	}
+
+	.content {
+		flex: 999 1 460px;
+		max-width: 700px;
+	}
+
+	h2 {
+		margin: 0 0 24px;
+		font-size: clamp(30px, 4.4vw, 48px);
+		font-weight: 400;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+	}
+
+	.dot {
+		color: var(--highlight);
+	}
+
+	.item {
+		border-top: 1px solid var(--paper-alt);
+		padding-bottom: 20px;
+	}
+
+	.item:last-child {
+		border-bottom: 1px solid var(--paper-alt);
+	}
+
+	.trigger {
+		width: 100%;
+		display: flex;
+		gap: 20px;
+		align-items: baseline;
+		padding: 20px 0 0;
+		cursor: pointer;
+		background: none;
+		border: none;
+		text-align: left;
+		font-family: inherit;
+		transition:
+			color 460ms var(--ease),
+			transform 520ms var(--ease);
+	}
+
+	.trigger:hover {
+		color: var(--accent);
+		transform: translateX(4px);
+	}
+
+	.question {
+		flex: 1 1 auto;
+		font-size: 20px;
+		line-height: 1.4;
+		max-width: 46ch;
+	}
+
+	.marker {
+		flex: 0 0 12px;
+		font-family: var(--font-sans);
+		font-size: 15px;
+		color: var(--accent);
+	}
+
+	.panel {
+		overflow: hidden;
+		max-width: 63ch;
+		max-height: 0;
+		opacity: 0;
+		transition:
+			max-height 620ms var(--ease),
+			opacity 520ms var(--ease);
+	}
+
+	.panel p {
+		margin: 0;
+		padding: 0;
+		font-size: 18px;
+		line-height: 1.65;
+	}
+
+	.panel-text {
+		display: block;
+		padding-top: 12px;
+	}
+</style>

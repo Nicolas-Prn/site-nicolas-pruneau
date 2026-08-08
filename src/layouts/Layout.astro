@@ -1,0 +1,83 @@
+---
+import "../styles/global.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Nicolas Pruneau",
+	description = "Nicolas Pruneau, étudiant ingénieur civil en informatique — sites web et outils sur mesure pour indépendants, commerces, ASBL et jeunes entreprises. Mons et Binche, ou à distance.",
+} = Astro.props;
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	name: "Nicolas Pruneau",
+	url: "https://nicolas-pruneau.com",
+	jobTitle: "Ingénieur civil en informatique",
+	sameAs: [
+		"https://github.com/Nicolas-Prn",
+		"https://www.linkedin.com/in/nicolas-pruneau-589a63318/",
+	],
+};
+---
+
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="canonical" href="https://nicolas-pruneau.com/" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content="https://nicolas-pruneau.com/" />
+		<meta property="og:locale" content="fr_FR" />
+		<meta name="twitter:card" content="summary" />
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	</head>
+	<body>
+		<div class="progress-track" aria-hidden="true">
+			<div class="progress-bar" data-progress></div>
+		</div>
+		<div class="page">
+			<slot />
+		</div>
+		<script>
+			import { initReveal, initGlow, initProgress, initFaq } from "../scripts/interactions";
+			initReveal();
+			initGlow();
+			initProgress();
+			initFaq();
+		</script>
+	</body>
+</html>
+
+<style>
+	.progress-track {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		z-index: 20;
+	}
+
+	.progress-bar {
+		height: 100%;
+		width: 0%;
+		background: var(--accent);
+		transition: width 260ms var(--ease);
+	}
+
+	.page {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 0 var(--page-margin);
+	}
+</style>
