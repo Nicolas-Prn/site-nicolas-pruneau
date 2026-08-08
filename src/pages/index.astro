@@ -1,4 +1,15 @@
 ---
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	name: "Nicolas Pruneau",
+	url: "https://nicolas-pruneau.com",
+	jobTitle: "Ingénieur civil en informatique",
+	sameAs: [
+		"https://github.com/Nicolas-Prn",
+		"https://www.linkedin.com/in/nicolas-pruneau-589a63318/",
+	],
+};
 ---
 
 <html lang="fr">
@@ -7,7 +18,22 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="canonical" href="https://nicolas-pruneau.com/" />
 		<title>Nicolas Pruneau</title>
+		<meta
+			name="description"
+			content="Nicolas Pruneau, ingénieur civil en informatique — sites web et outils sur mesure. Site en préparation."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Nicolas Pruneau" />
+		<meta
+			property="og:description"
+			content="Nicolas Pruneau, ingénieur civil en informatique — sites web et outils sur mesure. Site en préparation."
+		/>
+		<meta property="og:url" content="https://nicolas-pruneau.com/" />
+		<meta property="og:locale" content="fr_FR" />
+		<meta name="twitter:card" content="summary" />
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</head>
 	<body>
 		<main>

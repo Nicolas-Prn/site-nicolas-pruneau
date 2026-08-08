@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://nicolas-pruneau.com/sitemap-index.xml
