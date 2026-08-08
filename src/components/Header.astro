@@ -8,8 +8,8 @@ import portrait from "../assets/portrait.jpg";
 		<Image
 			src={portrait}
 			alt="Portrait de Nicolas Pruneau"
-			width={140}
-			height={140}
+			width={176}
+			height={176}
 			densities={[1, 2, 3]}
 			format="webp"
 			quality={90}
@@ -32,7 +32,7 @@ import portrait from "../assets/portrait.jpg";
 		display: flex;
 		flex-wrap: wrap;
 		gap: 20px 32px;
-		align-items: baseline;
+		align-items: center;
 		justify-content: space-between;
 		padding: clamp(28px, 5vw, 56px) 0 24px;
 		border-bottom: 1px solid var(--paper-alt);
@@ -41,31 +41,32 @@ import portrait from "../assets/portrait.jpg";
 	.identity {
 		display: flex;
 		align-items: center;
-		gap: 16px;
-		max-width: 520px;
+		gap: 22px;
+		max-width: 580px;
 	}
 
 	:global(.portrait) {
-		width: 140px;
-		height: 140px;
-		flex: 0 0 140px;
+		width: 176px;
+		height: 176px;
+		flex: 0 0 176px;
 		border-radius: 999px;
 		object-fit: cover;
 	}
 
 	.name {
-		font-size: 20px;
+		font-size: 25px;
 		font-weight: 600;
 		letter-spacing: 0.01em;
 	}
 
 	.tagline {
 		font-family: var(--font-sans);
-		font-size: 13.5px;
+		font-size: 16px;
 		line-height: 1.5;
 		color: var(--ink);
 		opacity: 0.72;
-		margin-top: 5px;
+		margin-top: 7px;
+		max-width: 32ch;
 	}
 
 	.cta {
