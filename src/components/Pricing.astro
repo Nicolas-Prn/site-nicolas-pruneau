@@ -1,0 +1,247 @@
+---
+import SectionMeta from "./SectionMeta.astro";
+
+const tiers = [
+	{ label: "Site vitrine une page", price: "à partir de 500 €", highlight: false },
+	{ label: "Site vitrine plusieurs pages", price: "à partir de 950 €", highlight: false },
+	{
+		label: "Outil sur mesure, automatisation, prototype",
+		price: "sur devis, après un premier échange",
+		highlight: true,
+	},
+];
+
+const payments = [
+	"30 % à la commande, une fois la proposition acceptée",
+	"30 % à la validation de la maquette, avant le développement",
+	"40 % à la livraison, une fois le site en ligne",
+];
+---
+
+<section class="pricing">
+	<SectionMeta numeral="iii" label="Tarifs" note="Fixés à la mission, par écrit, avant de commencer." />
+	<div class="content">
+		<h2>Tarifs<span class="dot">.</span></h2>
+		<p class="lead">
+			Trois repères. Le prix exact dépend du périmètre, et il est fixé par écrit avant de
+			commencer.
+		</p>
+
+		<div class="tiers">
+			{
+				tiers.map((tier) => (
+					<div class:list={["tier", { "tier-highlight": tier.highlight }]} data-reveal data-glow>
+						<div class="glow-layer" data-glow-layer />
+						<div class="tier-label">{tier.label}</div>
+						<div class="tier-price">{tier.price}</div>
+					</div>
+				))
+			}
+			<div class="launch-note">Tarifs de lancement, le temps de constituer mon portfolio.</div>
+		</div>
+
+		<div class="terms">
+			<div class="term">
+				<div class="term-label">Compris dans tous les cas</div>
+				<p>
+					Conception, développement, mise en ligne, optimisation mobile et vitesse, référencement
+					technique de base, deux tours de corrections.
+				</p>
+			</div>
+			<div class="term">
+				<div class="term-label">En supplément</div>
+				<p>
+					Hébergement et suivi si vous souhaitez me le confier, à partir de 15 € par mois. Le nom
+					de domaine reste à votre charge, environ 15 € par an, et à votre nom.
+				</p>
+			</div>
+		</div>
+
+		<div class="payment-block" data-reveal>
+			<h3>Vous payez au fur et à mesure</h3>
+			<p>
+				Le prix est fixé à la mission, jamais à l'heure. Il se règle en trois fois, à chaque étape
+				franchie :
+			</p>
+			<div class="payment-list">
+				{
+					payments.map((payment) => (
+						<div class="payment-item">
+							<div class="bullet" />
+							<div>{payment}</div>
+						</div>
+					))
+				}
+			</div>
+			<p>
+				Vous ne payez donc jamais d'avance pour du travail que vous n'avez pas encore vu. À chaque
+				étape, vous savez exactement où en est le projet avant d'engager la suite.
+			</p>
+		</div>
+
+		<p class="legal-note">
+			Petite entreprise soumise au régime de la franchise de la taxe. TVA non applicable : le prix
+			annoncé est le prix payé.
+		</p>
+	</div>
+</section>
+
+<style>
+	.pricing {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 24px 56px;
+		padding: var(--section-pad) 0;
+		border-top: 1px solid var(--paper-alt);
+	}
+
+	.content {
+		flex: 999 1 460px;
+		max-width: 700px;
+	}
+
+	h2 {
+		margin: 0 0 24px;
+		font-size: clamp(30px, 4.4vw, 48px);
+		font-weight: 400;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+	}
+
+	.dot {
+		color: var(--highlight);
+	}
+
+	.lead {
+		margin: 0;
+		font-size: 21px;
+		line-height: 1.5;
+		max-width: 56ch;
+	}
+
+	.tiers {
+		margin-top: 36px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.tier {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 24px;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: clamp(18px, 2.4vw, 26px);
+		border: 1px solid var(--paper-alt);
+		border-radius: 22px;
+		transition:
+			transform 560ms var(--ease),
+			border-color 520ms var(--ease);
+	}
+
+	.tier:hover {
+		transform: translateY(-3px);
+		border-color: var(--highlight);
+	}
+
+	.tier-highlight {
+		background: var(--paper-alt);
+	}
+
+	.tier-label {
+		font-size: 20px;
+		max-width: 30ch;
+	}
+
+	.tier-price {
+		font-size: clamp(20px, 2.6vw, 25px);
+		color: var(--accent);
+	}
+
+	.launch-note {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		margin-top: 12px;
+		opacity: 0.6;
+	}
+
+	.terms {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 32px 48px;
+		margin-top: 44px;
+	}
+
+	.term {
+		flex: 1 1 250px;
+		max-width: 46ch;
+	}
+
+	.term-label {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		letter-spacing: 0.04em;
+		color: var(--accent);
+		margin-bottom: 8px;
+	}
+
+	.term p {
+		margin: 0;
+		font-size: 17.5px;
+		line-height: 1.6;
+	}
+
+	.payment-block {
+		margin-top: 44px;
+		background: var(--paper-alt);
+		border-radius: 28px;
+		padding: clamp(26px, 4vw, 40px);
+	}
+
+	.payment-block h3 {
+		margin: 0;
+		font-size: 22px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.payment-block > p {
+		margin: 12px 0 0;
+		font-size: 18px;
+		line-height: 1.65;
+		max-width: 58ch;
+	}
+
+	.payment-list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin: 22px 0 0;
+	}
+
+	.payment-item {
+		display: flex;
+		gap: 14px;
+		align-items: baseline;
+		font-size: 18px;
+		line-height: 1.5;
+	}
+
+	.bullet {
+		flex: 0 0 auto;
+		width: 7px;
+		height: 7px;
+		border-radius: 999px;
+		background: var(--accent);
+	}
+
+	.legal-note {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		line-height: 1.6;
+		margin: 16px 0 0;
+		opacity: 0.6;
+		max-width: 60ch;
+	}
+</style>

@@ -28,3 +28,7 @@ pnpm-debug.log*
 plan.md
 design-bref.md
 content/
+
+# design reference/prototype — read once, reimplemented as real components, not shipped as-is
+design_handoff_site_vitrine/
+Spécifications typographiques et composants.zip

@@ -1,77 +1,28 @@
 ---
-const structuredData = {
-	"@context": "https://schema.org",
-	"@type": "Person",
-	name: "Nicolas Pruneau",
-	url: "https://nicolas-pruneau.com",
-	jobTitle: "Ingénieur civil en informatique",
-	sameAs: [
-		"https://github.com/Nicolas-Prn",
-		"https://www.linkedin.com/in/nicolas-pruneau-589a63318/",
-	],
-};
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import OpeningImage from "../components/OpeningImage.astro";
+import Services from "../components/Services.astro";
+import TechMarquee from "../components/TechMarquee.astro";
+import Process from "../components/Process.astro";
+import Quote from "../components/Quote.astro";
+import Pricing from "../components/Pricing.astro";
+import Faq from "../components/Faq.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<html lang="fr">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="canonical" href="https://nicolas-pruneau.com/" />
-		<title>Nicolas Pruneau</title>
-		<meta
-			name="description"
-			content="Nicolas Pruneau, ingénieur civil en informatique — sites web et outils sur mesure. Site en préparation."
-		/>
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content="Nicolas Pruneau" />
-		<meta
-			property="og:description"
-			content="Nicolas Pruneau, ingénieur civil en informatique — sites web et outils sur mesure. Site en préparation."
-		/>
-		<meta property="og:url" content="https://nicolas-pruneau.com/" />
-		<meta property="og:locale" content="fr_FR" />
-		<meta name="twitter:card" content="summary" />
-		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-	</head>
-	<body>
-		<main>
-			<h1>Nicolas Pruneau</h1>
-			<p>Site en préparation.</p>
-			<p>contact@nicolas-pruneau.com</p>
-		</main>
-	</body>
-</html>
-
-<style>
-	body {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 100vh;
-		margin: 0;
-		background: #f7f3ed;
-		color: #45151f;
-		font-family: Georgia, "Times New Roman", Times, serif;
-	}
-
-	main {
-		padding: 2rem;
-		text-align: center;
-	}
-
-	h1 {
-		font-size: 1.75rem;
-		font-weight: normal;
-		margin: 0 0 0.5rem;
-	}
-
-	p {
-		margin: 0.25rem 0;
-	}
-
-	a {
-		color: inherit;
-	}
-</style>
+<Layout>
+	<Header />
+	<Hero />
+	<OpeningImage />
+	<Services />
+	<TechMarquee />
+	<Process />
+	<Quote />
+	<Pricing />
+	<Faq />
+	<Contact />
+	<Footer />
+</Layout>

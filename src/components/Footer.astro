@@ -1,0 +1,73 @@
+---
+---
+
+<footer class="footer">
+	<div class="left">
+		<div class="contact-line">Nicolas Pruneau · <span class="email">contact@nicolas-pruneau.com</span></div>
+		<div class="links">
+			<a href="https://github.com/Nicolas-Prn" target="_blank" rel="noopener noreferrer">GitHub</a>
+			<span class="dot">·</span>
+			<a href="https://www.linkedin.com/in/nicolas-pruneau-589a63318/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+		</div>
+		<div class="oss-note">Le code de ce site est public.</div>
+	</div>
+	<div class="colophon">Composé en Spectral et IBM Plex Sans. Mons, 2026.</div>
+</footer>
+
+<style>
+	.footer {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px 56px;
+		justify-content: space-between;
+		padding: 28px 0 44px;
+		border-top: 1px solid var(--ink);
+	}
+
+	.left {
+		max-width: 40ch;
+	}
+
+	.contact-line {
+		font-size: 17px;
+	}
+
+	.email {
+		color: var(--accent);
+	}
+
+	.links {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		margin-top: 10px;
+		display: flex;
+		gap: 10px;
+		align-items: baseline;
+	}
+
+	.links a {
+		color: var(--accent);
+		text-decoration: none;
+		border-bottom: 1px solid var(--paper-alt);
+	}
+
+	.links .dot {
+		color: var(--highlight);
+	}
+
+	.oss-note {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		margin-top: 10px;
+		opacity: 0.62;
+	}
+
+	.colophon {
+		font-family: var(--font-serif);
+		font-style: italic;
+		font-size: 13.5px;
+		line-height: 1.7;
+		opacity: 0.62;
+		max-width: 26ch;
+	}
+</style>

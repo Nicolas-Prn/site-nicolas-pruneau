@@ -1,0 +1,51 @@
+---
+const stack = ["Python", "Django", "FastAPI", "Node.js", "React", "Docker", "WordPress"];
+---
+
+<div class="marquee">
+	<div class="track" data-marquee>
+		{
+			[0, 1].map((rep) => (
+				<div class="group" aria-hidden={rep === 1 ? "true" : undefined}>
+					{stack.map((tech) => (
+						<>
+							<span class="tech">{tech}</span>
+							<span class="sep">◆</span>
+						</>
+					))}
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<style>
+	.marquee {
+		border-top: 1px solid var(--paper-alt);
+		border-bottom: 1px solid var(--paper-alt);
+		padding: 16px 0;
+		overflow: hidden;
+	}
+
+	.track {
+		display: flex;
+		width: max-content;
+		animation: om-marquee 34s linear infinite;
+	}
+
+	.group {
+		display: flex;
+		gap: 24px;
+		align-items: center;
+		padding-right: 24px;
+		font-size: clamp(22px, 3vw, 32px);
+	}
+
+	.tech {
+		font-style: italic;
+	}
+
+	.sep {
+		color: var(--highlight);
+	}
+</style>

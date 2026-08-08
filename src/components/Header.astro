@@ -1,0 +1,111 @@
+---
+import { Image } from "astro:assets";
+import portrait from "../assets/portrait.jpg";
+---
+
+<header class="header">
+	<div class="identity">
+		<Image
+			src={portrait}
+			alt="Portrait de Nicolas Pruneau"
+			width={176}
+			height={176}
+			densities={[1, 2, 3]}
+			format="webp"
+			quality={90}
+			class="portrait"
+		/>
+		<div>
+			<div class="name">Nicolas Pruneau</div>
+			<div class="tagline">Étudiant ingénieur civil en informatique, sites web et outils sur mesure</div>
+		</div>
+	</div>
+	<a href="#contact" class="cta" data-glow>
+		<div class="glow-layer glow-tight" data-glow-layer></div>
+		Me contacter
+		<span class="arrow">→</span>
+	</a>
+</header>
+
+<style>
+	.header {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px 32px;
+		align-items: center;
+		justify-content: space-between;
+		padding: clamp(28px, 5vw, 56px) 0 24px;
+		border-bottom: 1px solid var(--paper-alt);
+	}
+
+	.identity {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+		max-width: 580px;
+	}
+
+	:global(.portrait) {
+		width: 176px;
+		height: 176px;
+		flex: 0 0 176px;
+		border-radius: 999px;
+		object-fit: cover;
+	}
+
+	.name {
+		font-size: 25px;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+	}
+
+	.tagline {
+		font-family: var(--font-sans);
+		font-size: 16px;
+		line-height: 1.5;
+		color: var(--ink);
+		opacity: 0.72;
+		margin-top: 7px;
+		max-width: 32ch;
+	}
+
+	.cta {
+		position: relative;
+		font-family: var(--font-sans);
+		font-size: 14px;
+		letter-spacing: 0.01em;
+		color: var(--accent);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 11px 12px 11px 22px;
+		border: 1px solid var(--accent);
+		border-radius: 999px;
+		transition:
+			color 460ms var(--ease),
+			background 460ms var(--ease),
+			border-color 460ms var(--ease),
+			transform 460ms var(--ease);
+	}
+
+	.cta:hover {
+		color: var(--paper);
+		background: var(--accent);
+		border-color: var(--accent);
+		transform: translateY(-2px);
+	}
+
+	.arrow {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 26px;
+		height: 26px;
+		border-radius: 999px;
+		background: var(--highlight);
+		color: var(--paper);
+		font-size: 13px;
+		line-height: 1;
+	}
+</style>

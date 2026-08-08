@@ -1,0 +1,223 @@
+---
+import SectionMeta from "./SectionMeta.astro";
+---
+
+<section id="contact" class="contact">
+	<SectionMeta numeral="v" label="Contact" note="Réponse sous 24 à 48 heures, écrite par moi." />
+	<div class="content">
+		<h2>Parlons-en</h2>
+		<p class="lead">
+			Une idée vague, un projet précis, ou juste une question : le premier échange ne coûte rien
+			et ne vous engage à rien. Je réponds sous 24 à 48 heures.
+		</p>
+
+		<form data-reveal data-contact-form>
+			<label>
+				<span>Nom</span>
+				<input type="text" name="nom" required />
+			</label>
+			<label>
+				<span>Email</span>
+				<input type="email" name="email" required />
+			</label>
+			<div class="row">
+				<label class="select-label">
+					<span>De quoi s'agit-il ?</span>
+					<select name="sujet">
+						<option>Site vitrine</option>
+						<option>Outil ou automatisation</option>
+						<option>Prototype</option>
+						<option>Je ne sais pas encore</option>
+					</select>
+					<span class="chevron" aria-hidden="true">▾</span>
+				</label>
+				<label class="select-label">
+					<span>Budget envisagé</span>
+					<select name="budget">
+						<option>Moins de 750 €</option>
+						<option>750 à 1 500 €</option>
+						<option>Plus de 1 500 €</option>
+						<option>Je n'en ai aucune idée</option>
+					</select>
+					<span class="chevron" aria-hidden="true">▾</span>
+				</label>
+			</div>
+			<label>
+				<span>Décrivez votre situation en quelques lignes</span>
+				<textarea name="message" rows="5"></textarea>
+			</label>
+			<div class="submit-row">
+				<button type="submit">Envoyer</button>
+				<span class="confirmation" data-contact-confirmation></span>
+			</div>
+		</form>
+
+		<p class="phone-note">
+			Pas de téléphone affiché, volontairement : je réponds mieux par écrit. Nous pourrons
+			convenir d'un appel dès le premier échange.
+		</p>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll("[data-contact-form]").forEach((form) => {
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const confirmation = form.querySelector("[data-contact-confirmation]");
+			if (confirmation) {
+				confirmation.textContent = "Merci, je vous réponds sous 24 à 48 heures.";
+			}
+		});
+	});
+</script>
+
+<style>
+	.contact {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 24px 56px;
+		padding: var(--section-pad) 0 clamp(48px, 8vw, 88px);
+		border-top: 1px solid var(--paper-alt);
+	}
+
+	.content {
+		flex: 999 1 460px;
+		max-width: 700px;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: clamp(30px, 3.6vw, 40px);
+		font-weight: 400;
+		line-height: 1.15;
+		letter-spacing: -0.01em;
+	}
+
+	.lead {
+		margin: 16px 0 0;
+		font-size: 18.5px;
+		line-height: 1.65;
+		max-width: 60ch;
+	}
+
+	form {
+		margin-top: 36px;
+		display: flex;
+		flex-direction: column;
+		gap: 26px;
+		max-width: 600px;
+		background: var(--paper-alt);
+		border-radius: 28px;
+		padding: clamp(24px, 4vw, 38px);
+	}
+
+	label {
+		display: flex;
+		flex-direction: column;
+		gap: 7px;
+	}
+
+	label > span:first-child {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		letter-spacing: 0.03em;
+		opacity: 0.75;
+	}
+
+	input,
+	textarea,
+	select {
+		background: var(--paper);
+		border: 1px solid var(--paper-alt);
+		border-radius: 14px;
+		padding: 12px 14px;
+		font-size: 18px;
+		font-family: var(--font-serif);
+		transition: border-color 460ms var(--ease);
+	}
+
+	input:hover,
+	input:focus,
+	textarea:hover,
+	textarea:focus,
+	select:hover,
+	select:focus {
+		border-color: var(--accent);
+	}
+
+	textarea {
+		line-height: 1.6;
+		resize: vertical;
+	}
+
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 26px;
+	}
+
+	.select-label {
+		flex: 1 1 220px;
+		position: relative;
+	}
+
+	select {
+		width: 100%;
+		padding: 12px 38px 12px 14px;
+		appearance: none;
+	}
+
+	.chevron {
+		position: absolute;
+		right: 16px;
+		bottom: 18px;
+		font-size: 11px;
+		line-height: 1;
+		color: var(--ink);
+		pointer-events: none;
+	}
+
+	.submit-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px 20px;
+		align-items: center;
+	}
+
+	button {
+		background: var(--accent);
+		color: var(--paper);
+		border: 1px solid var(--accent);
+		padding: 14px 30px;
+		font-family: var(--font-sans);
+		font-size: 14.5px;
+		letter-spacing: 0.02em;
+		cursor: pointer;
+		border-radius: 999px;
+		transition:
+			background 480ms var(--ease),
+			border-color 480ms var(--ease),
+			transform 480ms var(--ease);
+	}
+
+	button:hover {
+		background: var(--ink);
+		border-color: var(--ink);
+		transform: translateY(-2px);
+	}
+
+	.confirmation {
+		font-family: var(--font-sans);
+		font-size: 13px;
+		color: var(--accent);
+	}
+
+	.phone-note {
+		font-family: var(--font-sans);
+		font-size: 12.5px;
+		line-height: 1.65;
+		margin: 28px 0 0;
+		opacity: 0.62;
+		max-width: 58ch;
+	}
+</style>
