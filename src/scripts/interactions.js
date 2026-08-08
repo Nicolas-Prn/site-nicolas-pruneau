@@ -82,8 +82,8 @@ export function initFaq() {
 		}
 	};
 
-	panels.forEach((target, index) => {
-		setOpen(target, index === 0);
+	panels.forEach((target) => {
+		setOpen(target, false);
 		target.button.addEventListener("click", () => {
 			const willOpen = target.button.getAttribute("aria-expanded") !== "true";
 			panels.forEach((other) => setOpen(other, other === target ? willOpen : false));

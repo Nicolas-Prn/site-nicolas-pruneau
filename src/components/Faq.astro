@@ -52,13 +52,13 @@ const items = [
 							type="button"
 							class="trigger"
 							data-faq-trigger
-							aria-expanded={index === 0 ? "true" : "false"}
+							aria-expanded="false"
 							aria-controls={`faq-panel-${index}`}
 							id={`faq-trigger-${index}`}
 						>
 							<span class="question">{item.question}</span>
 							<span class="marker" data-faq-marker aria-hidden="true">
-								{index === 0 ? "–" : "+"}
+								+
 							</span>
 						</button>
 						<div
