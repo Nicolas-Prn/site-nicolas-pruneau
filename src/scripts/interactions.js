@@ -1,4 +1,23 @@
 /**
+ * Reports the drawn width of the block the dimension sits under, in the CSS
+ * pixels the visitor's screen is actually using, and keeps reporting it while
+ * the window is resized. Nothing here is decorative: the number is measured.
+ */
+export function initMeasure() {
+	const el = document.querySelector("[data-measure]");
+	const value = document.querySelector("[data-measure-value]");
+	if (!el || !value) return;
+
+	const format = new Intl.NumberFormat("fr-BE");
+	const update = () => {
+		value.textContent = `${format.format(Math.round(el.getBoundingClientRect().width))} px`;
+	};
+
+	update();
+	new ResizeObserver(update).observe(el);
+}
+
+/**
  * Records where the pointer crossed the edge, so the fill can grow from that
  * exact point rather than from the middle. Keyboard focus falls back to the
  * centre, which is the only honest origin when there is no pointer.
