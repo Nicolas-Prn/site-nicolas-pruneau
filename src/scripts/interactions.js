@@ -1,4 +1,50 @@
 /**
+ * Advances the drawing set. The background is fixed, so it never slides with
+ * the scroll: it steps once, decisively, whenever a different section takes the
+ * viewport — in either direction — and the arriving sheet is drawn from scratch.
+ */
+export function initSheets() {
+	const stage = document.querySelector("[data-sheets-stage]");
+	const folio = document.querySelector("[data-folio]");
+	const sections = document.querySelectorAll("[data-sheet-section]");
+	if (!stage || !sections.length) return;
+
+	const sheets = new Map();
+	stage.querySelectorAll("[data-sheet]").forEach((el) => sheets.set(el.dataset.sheet, el));
+
+	let current = null;
+	const show = (id) => {
+		if (id === current) return;
+		current = id;
+		sheets.forEach((el, key) => {
+			/* Re-adding the attribute restarts the draw, so a sheet revisited on
+			   the way back up is plotted again rather than simply revealed. */
+			el.removeAttribute("data-active");
+			if (key === id) {
+				void el.getBoundingClientRect();
+				el.setAttribute("data-active", "");
+			}
+		});
+		stage.style.setProperty("--step", String(Number(id) - 1));
+		if (folio) folio.textContent = id;
+	};
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			/* The section covering the middle of the viewport is the one on the
+			   machine; ties go to whichever is most visible. */
+			const visible = entries
+				.filter((entry) => entry.isIntersecting)
+				.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+			if (visible) show(visible.target.dataset.sheetSection);
+		},
+		{ rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.25, 0.5, 1] }
+	);
+
+	sections.forEach((section) => observer.observe(section));
+}
+
+/**
  * Reports the drawn width of the block the dimension sits under, in the CSS
  * pixels the visitor's screen is actually using, and keeps reporting it while
  * the window is resized. Nothing here is decorative: the number is measured.

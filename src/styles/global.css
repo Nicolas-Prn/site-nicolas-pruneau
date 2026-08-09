@@ -28,6 +28,12 @@
 	--ink-soft: #6b5847;
 	--rule: #d8c9b4;
 
+	/* The drawing continues onto the manila, in the same ink as the text but
+	   held far enough back that it never competes with reading. */
+	--draw-ink: #7a6248;
+	--grid-ghost: rgba(122, 98, 72, 0.07);
+	--grid-faint: rgba(122, 98, 72, 0.14);
+
 	/* Amber draws and carries the energy; the same hue darkened passes AA as
 	   text on manila. Petrol is the counterweight, used sparingly — it is what
 	   keeps the warmth from turning sleepy. */
@@ -45,6 +51,9 @@
 	/* Mechanical easing for the cover: fast start, long settle, like a pen arm. */
 	--ease-plot: cubic-bezier(0.16, 0.84, 0.36, 1);
 
+	/* The fillet radius. Sharp enough to stay drawn, soft enough to touch. */
+	--fillet: 10px;
+
 	--gutter: clamp(20px, 5.5vw, 56px);
 	--sheet: 1180px;
 	--rail: clamp(7.5rem, 13vw, 12rem);
@@ -58,7 +67,9 @@
 }
 
 html {
-	background: var(--stone);
+	/* The manila lives here so the fixed drawing set can sit behind the document
+	   and still be seen through it. */
+	background: var(--paper);
 	color-scheme: light;
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-size-adjust: 100%;
@@ -67,7 +78,7 @@ html {
 body {
 	margin: 0;
 	overflow-x: clip;
-	background: var(--paper);
+	background: transparent;
 	color: var(--ink);
 	font-family: var(--sans);
 	font-size: 1.0625rem;
