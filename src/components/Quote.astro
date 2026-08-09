@@ -1,55 +1,27 @@
 ---
 ---
 
-<aside class="quote" data-reveal>
-	<div class="gutter"></div>
-	<div class="content">
-		<span class="mark" aria-hidden="true">«</span>
-		<p>Le prix est fixé à la mission, jamais à l'heure.</p>
-		<span class="mark end" aria-hidden="true">»</span>
-	</div>
+<aside class="sheet section">
+	<p class="quote-text">Le prix est fixé à la mission, jamais à l'heure.</p>
 </aside>
 
 <style>
-	.quote {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 24px 56px;
-		padding: clamp(36px, 5vw, 60px) 0;
-		border-top: 1px solid var(--paper-alt);
+	/* The one place the ink is allowed to be large. */
+	.quote-text {
+		margin: 0;
+		font-family: var(--display);
+		font-size: clamp(1.5rem, 4.4vw, 3rem);
+		font-weight: 400;
+		line-height: 1.2;
+		letter-spacing: -0.015em;
+		color: var(--accent);
+		max-width: 22ch;
+		text-wrap: balance;
 	}
 
-	.gutter {
-		flex: 1 1 132px;
-	}
-
-	.content {
-		flex: 999 1 460px;
-		max-width: 700px;
-		background: linear-gradient(152deg, oklch(0.42 0.09 18) 0%, oklch(0.52 0.08 34) 100%);
-		color: var(--paper);
-		border-radius: 30px;
-		padding: clamp(28px, 4vw, 46px);
-	}
-
-	.mark {
-		display: block;
-		font-size: 40px;
-		color: var(--highlight);
-		line-height: 0.8;
-	}
-
-	.mark.end {
-		text-align: right;
-		margin-top: 10px;
-	}
-
-	.content p {
-		margin: 14px 0 0;
-		font-family: var(--font-serif);
-		font-style: italic;
-		font-size: clamp(26px, 3.4vw, 38px);
-		line-height: 1.25;
-		max-width: 26ch;
+	@media (min-width: 940px) {
+		.quote-text {
+			grid-column: 2;
+		}
 	}
 </style>

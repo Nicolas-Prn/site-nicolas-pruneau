@@ -1,5 +1,6 @@
 ---
-import SectionMeta from "./SectionMeta.astro";
+import SectionHead from "./SectionHead.astro";
+import { fr } from "../lib/typography.js";
 
 const items = [
 	{
@@ -40,27 +41,29 @@ const items = [
 ];
 ---
 
-<section class="faq">
-	<SectionMeta numeral="iv" label="Questions fréquentes" note="Celles qu'on me pose vraiment, dont les gênantes." />
-	<div class="content">
-		<h2>Questions fréquentes<span class="dot">.</span></h2>
+<section class="sheet section">
+	<SectionHead index="iv" note="Celles qu'on me pose vraiment, dont les gênantes." />
+	<div class="column">
+		<h2 class="h2">Questions fréquentes</h2>
 		<div class="list">
 			{
 				items.map((item, index) => (
 					<div class="item" data-faq-item>
-						<button
-							type="button"
-							class="trigger"
-							data-faq-trigger
-							aria-expanded="false"
-							aria-controls={`faq-panel-${index}`}
-							id={`faq-trigger-${index}`}
-						>
-							<span class="question">{item.question}</span>
-							<span class="marker" data-faq-marker aria-hidden="true">
-								+
-							</span>
-						</button>
+						<h3 class="item-heading">
+							<button
+								type="button"
+								class="trigger"
+								data-faq-trigger
+								aria-expanded="false"
+								aria-controls={`faq-panel-${index}`}
+								id={`faq-trigger-${index}`}
+							>
+								<span class="question">{fr(item.question)}</span>
+								<span class="marker" data-faq-marker aria-hidden="true">
+									+
+								</span>
+							</button>
+						</h3>
 						<div
 							class="panel"
 							data-faq-panel
@@ -68,9 +71,7 @@ const items = [
 							role="region"
 							aria-labelledby={`faq-trigger-${index}`}
 						>
-							<p>
-								<span class="panel-text">{item.answer}</span>
-							</p>
+							<p class="answer">{fr(item.answer)}</p>
 						</div>
 					</div>
 				))
@@ -80,94 +81,68 @@ const items = [
 </section>
 
 <style>
-	.faq {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 24px 56px;
-		padding: var(--section-pad) 0;
-		border-top: 1px solid var(--paper-alt);
-	}
-
-	.content {
-		flex: 999 1 460px;
-		max-width: 700px;
-	}
-
-	h2 {
-		margin: 0 0 24px;
-		font-size: clamp(30px, 4.4vw, 48px);
-		font-weight: 400;
-		line-height: 1.08;
-		letter-spacing: -0.02em;
-	}
-
-	.dot {
-		color: var(--highlight);
+	.list {
+		margin-top: clamp(2rem, 4vw, 3rem);
 	}
 
 	.item {
-		border-top: 1px solid var(--paper-alt);
-		padding-bottom: 20px;
+		border-top: 1px solid var(--rule);
 	}
 
-	.item:last-child {
-		border-bottom: 1px solid var(--paper-alt);
+	.item-heading {
+		margin: 0;
+		font-weight: 400;
 	}
 
 	.trigger {
-		width: 100%;
 		display: flex;
-		gap: 20px;
 		align-items: baseline;
-		padding: 20px 0 0;
-		cursor: pointer;
-		background: none;
+		gap: 1.25rem;
+		width: 100%;
+		padding: 1.15rem 0;
 		border: none;
+		background: none;
+		color: inherit;
+		font: inherit;
 		text-align: left;
-		font-family: inherit;
-		transition:
-			color 460ms var(--ease),
-			transform 520ms var(--ease);
-	}
-
-	.trigger:hover {
-		color: var(--accent);
-		transform: translateX(4px);
+		cursor: pointer;
 	}
 
 	.question {
 		flex: 1 1 auto;
-		font-size: 20px;
-		line-height: 1.4;
-		max-width: 46ch;
+		font-family: var(--display);
+		font-size: clamp(1.0625rem, 1.9vw, 1.25rem);
+		line-height: 1.35;
+		max-width: 44ch;
+		transition: color 260ms var(--ease);
+	}
+
+	.trigger:hover .question {
+		color: var(--accent);
 	}
 
 	.marker {
-		flex: 0 0 12px;
-		font-family: var(--font-sans);
-		font-size: 15px;
+		flex: 0 0 auto;
+		font-family: var(--mono);
+		font-size: 0.875rem;
 		color: var(--accent);
 	}
 
 	.panel {
 		overflow: hidden;
-		max-width: 63ch;
 		max-height: 0;
 		opacity: 0;
 		transition:
-			max-height 620ms var(--ease),
-			opacity 520ms var(--ease);
+			max-height 420ms var(--ease),
+			opacity 320ms var(--ease);
 	}
 
-	.panel p {
+	.answer {
 		margin: 0;
-		padding: 0;
-		font-size: 18px;
-		line-height: 1.65;
-	}
-
-	.panel-text {
-		display: block;
-		padding-top: 12px;
+		padding-bottom: 1.5rem;
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--ink-soft);
+		max-width: 62ch;
 	}
 </style>

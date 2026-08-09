@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import frauncesUrl from "@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url";
+import plexSansUrl from "@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url";
 
 interface Props {
 	title?: string;
@@ -30,7 +32,10 @@ const structuredData = {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#222b33" />
 		<link rel="canonical" href="https://nicolas-pruneau.com/" />
+		<link rel="preload" as="font" type="font/woff2" href={frauncesUrl} crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href={plexSansUrl} crossorigin />
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta property="og:type" content="website" />
@@ -42,42 +47,10 @@ const structuredData = {
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</head>
 	<body>
-		<div class="progress-track" aria-hidden="true">
-			<div class="progress-bar" data-progress></div>
-		</div>
-		<div class="page">
-			<slot />
-		</div>
+		<slot />
 		<script>
-			import { initReveal, initGlow, initProgress, initFaq } from "../scripts/interactions";
-			initReveal();
-			initGlow();
-			initProgress();
+			import { initFaq } from "../scripts/interactions";
 			initFaq();
 		</script>
 	</body>
 </html>
-
-<style>
-	.progress-track {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 2px;
-		z-index: 20;
-	}
-
-	.progress-bar {
-		height: 100%;
-		width: 0%;
-		background: var(--accent);
-		transition: width 260ms var(--ease);
-	}
-
-	.page {
-		max-width: 1000px;
-		margin: 0 auto;
-		padding: 0 var(--page-margin);
-	}
-</style>

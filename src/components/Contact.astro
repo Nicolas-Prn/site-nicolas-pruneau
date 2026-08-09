@@ -1,90 +1,114 @@
 ---
-import SectionMeta from "./SectionMeta.astro";
+import { Image } from "astro:assets";
+import SectionHead from "./SectionHead.astro";
+import { fr } from "../lib/typography.js";
+import portrait from "../assets/portrait.jpg";
 ---
 
-<section id="contact" class="contact">
-	<SectionMeta numeral="v" label="Contact" note="Réponse sous 24 à 48 heures, écrite par moi." />
-	<div class="content">
-		<h2>Parlons-en</h2>
+<section id="contact" class="sheet section">
+	<SectionHead index="v" note="Réponse sous 24 à 48 heures, écrite par moi." />
+	<div class="column">
+		<h2 class="h2">Parlons-en</h2>
 		<p class="lead">
-			Une idée vague, un projet précis, ou juste une question : le premier échange ne coûte rien
-			et ne vous engage à rien.
+			{
+				fr(
+					"Une idée vague, un projet précis, ou juste une question : le premier échange ne coûte rien et ne vous engage à rien."
+				)
+			}
 		</p>
 
-		<div class="notice" data-reveal>
-			<p class="notice-text">
-				Le formulaire de contact n'est pas encore branché. En attendant, écrivez-moi directement
-				— je réponds sous 24 à 48 heures :
-			</p>
-			<p class="notice-email">contact@nicolas-pruneau.com</p>
+		<div class="direct">
+			<Image
+				src={portrait}
+				alt="Portrait de Nicolas Pruneau"
+				width={200}
+				height={250}
+				densities={[1, 2]}
+				format="webp"
+				quality={88}
+				class="portrait"
+			/>
+			<div class="direct-body">
+				<p class="notice-text">
+					{
+						fr(
+							"Le formulaire de contact n'est pas encore branché. En attendant, écrivez-moi directement — je réponds sous 24 à 48 heures :"
+						)
+					}
+				</p>
+				<p class="notice-email">
+					<a href="mailto:contact@nicolas-pruneau.com">contact@nicolas-pruneau.com</a>
+				</p>
+			</div>
 		</div>
 
-		<p class="phone-note">
-			Pas de téléphone affiché, volontairement : je réponds mieux par écrit. Nous pourrons
-			convenir d'un appel dès le premier échange.
+		<p class="phone-note micro">
+			{
+				fr(
+					"Pas de téléphone affiché, volontairement : je réponds mieux par écrit. Nous pourrons convenir d'un appel dès le premier échange."
+				)
+			}
 		</p>
 	</div>
 </section>
 
 <style>
-	.contact {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 24px 56px;
-		padding: var(--section-pad) 0 clamp(48px, 8vw, 88px);
-		border-top: 1px solid var(--paper-alt);
+	.direct {
+		display: grid;
+		gap: clamp(1.25rem, 3vw, 2rem);
+		margin-top: clamp(2rem, 4vw, 3rem);
+		padding-top: clamp(1.75rem, 3.5vw, 2.5rem);
+		border-top: 1px solid var(--rule);
 	}
 
-	.content {
-		flex: 999 1 460px;
-		max-width: 700px;
+	@media (min-width: 34em) {
+		.direct {
+			grid-template-columns: auto minmax(0, 1fr);
+			align-items: start;
+		}
 	}
 
-	h2 {
-		margin: 0;
-		font-size: clamp(30px, 3.6vw, 40px);
-		font-weight: 400;
-		line-height: 1.15;
-		letter-spacing: -0.01em;
+	/* Documented, not decorated: a rectangle, the way a photograph is printed. */
+	.portrait {
+		width: clamp(7rem, 22vw, 10rem);
+		height: auto;
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		border-radius: 2px;
+		filter: saturate(0.88);
 	}
 
-	.lead {
-		margin: 16px 0 0;
-		font-size: 18.5px;
-		line-height: 1.65;
-		max-width: 60ch;
-	}
-
-	.notice {
-		margin-top: 36px;
-		display: flex;
-		flex-direction: column;
-		gap: 14px;
-		max-width: 600px;
-		background: var(--paper-alt);
-		border-radius: 28px;
-		padding: clamp(24px, 4vw, 38px);
+	.direct-body {
+		min-width: 0;
 	}
 
 	.notice-text {
 		margin: 0;
-		font-size: 18px;
-		line-height: 1.65;
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--ink-soft);
+		max-width: 52ch;
 	}
 
 	.notice-email {
-		margin: 0;
-		font-size: 22px;
-		font-weight: 600;
+		margin: 0.9rem 0 0;
+		font-family: var(--mono);
+		font-size: clamp(0.875rem, 2.6vw, 1.0625rem);
+		overflow-wrap: anywhere;
+	}
+
+	.notice-email a {
 		color: var(--accent);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 4px;
+	}
+
+	.notice-email a:hover {
+		color: var(--ink);
 	}
 
 	.phone-note {
-		font-family: var(--font-sans);
-		font-size: 12.5px;
-		line-height: 1.65;
-		margin: 28px 0 0;
-		opacity: 0.62;
+		margin: clamp(1.75rem, 3.5vw, 2.5rem) 0 0;
 		max-width: 58ch;
 	}
 </style>

@@ -1,76 +1,101 @@
 ---
 ---
 
-<footer class="footer">
-	<div class="left">
-		<div class="name-line">Nicolas Pruneau</div>
-		<div class="email-line">contact@nicolas-pruneau.com</div>
-		<div class="links">
-			<a href="https://github.com/Nicolas-Prn" target="_blank" rel="noopener noreferrer">GitHub</a>
-			<span class="dot">·</span>
-			<a href="https://www.linkedin.com/in/nicolas-pruneau-589a63318/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+<footer class="colophon">
+	<div class="colophon-inner">
+		<div class="identity">
+			<span class="name">Nicolas Pruneau</span>
+			<a class="email" href="mailto:contact@nicolas-pruneau.com">contact@nicolas-pruneau.com</a>
+			<span class="links">
+				<a href="https://github.com/Nicolas-Prn" target="_blank" rel="noopener noreferrer">GitHub</a>
+				<span class="sep" aria-hidden="true">·</span>
+				<a
+					href="https://www.linkedin.com/in/nicolas-pruneau-589a63318/"
+					target="_blank"
+					rel="noopener noreferrer">LinkedIn</a
+				>
+			</span>
+			<span class="oss-note">Le code de ce site est public.</span>
 		</div>
-		<div class="oss-note">Le code de ce site est public.</div>
+		<p class="imprint">Composé en Fraunces et IBM&nbsp;Plex. Mons, 2026.</p>
 	</div>
-	<div class="colophon">Composé en Spectral et IBM Plex Sans. Mons, 2026.</div>
 </footer>
 
 <style>
-	.footer {
+	/* The binding closes on the same stone it opened with. */
+	.colophon {
+		background: var(--stone);
+		color: var(--chalk);
+	}
+
+	.colophon-inner {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 20px 56px;
 		justify-content: space-between;
-		padding: 28px 0 44px;
-		border-top: 1px solid var(--ink);
+		gap: 2rem clamp(2rem, 5vw, 4rem);
+		max-width: var(--sheet);
+		margin-inline: auto;
+		padding: clamp(2.5rem, 6vw, 4rem) var(--gutter);
 	}
 
-	.left {
-		max-width: 40ch;
+	.identity {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
 	}
 
-	.name-line {
-		font-size: 17px;
+	.name {
+		font-family: var(--display);
+		font-size: 1.125rem;
 	}
 
-	.email-line {
-		font-size: 17px;
-		color: var(--accent);
-		margin-top: 4px;
+	.email {
+		font-family: var(--mono);
+		font-size: 0.8125rem;
+		color: var(--chalk);
+		text-decoration-color: var(--stone-line);
+		text-underline-offset: 4px;
+		overflow-wrap: anywhere;
 	}
 
 	.links {
-		font-family: var(--font-sans);
-		font-size: 12.5px;
-		margin-top: 10px;
 		display: flex;
-		gap: 10px;
 		align-items: baseline;
+		gap: 0.6rem;
+		margin-top: 0.35rem;
+		font-family: var(--mono);
+		font-size: 0.75rem;
 	}
 
 	.links a {
-		color: var(--accent);
-		text-decoration: none;
-		border-bottom: 1px solid var(--paper-alt);
+		color: var(--chalk);
+		text-decoration-color: var(--stone-line);
+		text-underline-offset: 4px;
 	}
 
-	.links .dot {
-		color: var(--highlight);
+	.email:hover,
+	.links a:hover {
+		text-decoration-color: currentColor;
+	}
+
+	.sep {
+		color: var(--stone-soft);
+	}
+
+	.oss-note,
+	.imprint {
+		font-size: 0.8125rem;
+		line-height: 1.6;
+		color: var(--stone-soft);
 	}
 
 	.oss-note {
-		font-family: var(--font-sans);
-		font-size: 12.5px;
-		margin-top: 10px;
-		opacity: 0.62;
+		margin-top: 0.35rem;
 	}
 
-	.colophon {
-		font-family: var(--font-serif);
-		font-style: italic;
-		font-size: 13.5px;
-		line-height: 1.7;
-		opacity: 0.62;
-		max-width: 26ch;
+	.imprint {
+		margin: 0;
+		max-width: 22ch;
 	}
 </style>

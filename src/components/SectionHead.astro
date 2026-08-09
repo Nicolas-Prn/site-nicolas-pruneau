@@ -1,0 +1,15 @@
+---
+import { fr } from "../lib/typography.js";
+
+interface Props {
+	index: string;
+	note: string;
+}
+
+const { index, note } = Astro.props;
+---
+
+<div class="rail">
+	<span class="rail-index">{index}</span>
+	<p class="rail-note">{fr(note)}</p>
+</div>

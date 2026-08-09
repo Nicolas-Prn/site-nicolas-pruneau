@@ -1,0 +1,237 @@
+---
+---
+
+<header class="cover">
+	<div class="cover-inner">
+		<div class="cover-top">
+			<span class="cover-name">Nicolas Pruneau</span>
+			<span class="cover-tagline">
+				Étudiant ingénieur civil en informatique, sites web et outils sur mesure
+			</span>
+		</div>
+
+		<div class="cover-middle">
+			<span class="cover-rule" aria-hidden="true"></span>
+			<h1 class="cover-title">
+				<span class="cover-line">Un site, un outil interne, un prototype.</span>
+				<span class="cover-line">
+					Je conçois <span class="cover-key">ce qui n'existe pas encore</span>.
+				</span>
+			</h1>
+			<p class="cover-sub">
+				Étudiant ingénieur civil à la Faculté Polytechnique de Mons, orientation informatique et
+				intelligence artificielle. Je conçois des sites vitrines et des outils sur mesure pour les
+				indépendants, commerces, ASBL et jeunes entreprises. Région de Mons et Binche, ou à
+				distance.
+			</p>
+			<a href="#contact" class="cover-cta">
+				Me contacter
+				<span class="cover-arrow" aria-hidden="true">→</span>
+			</a>
+		</div>
+
+		<div class="cover-foot">
+			<span class="cover-place">Mons · Binche</span>
+			<p class="cover-note">Belgique, ou à distance quand la distance ne change rien.</p>
+		</div>
+	</div>
+</header>
+
+<style>
+	.cover {
+		background: var(--stone);
+		color: var(--chalk);
+	}
+
+	.cover-inner {
+		display: flex;
+		flex-direction: column;
+		gap: clamp(2.5rem, 7vw, 5rem);
+		min-height: 100vh;
+		min-height: 100svh;
+		max-width: var(--sheet);
+		margin-inline: auto;
+		padding: clamp(1.75rem, 4.5vw, 3rem) var(--gutter) clamp(1.5rem, 3.5vw, 2.5rem);
+	}
+
+	.cover-middle {
+		margin-block: auto;
+	}
+
+	/* ── Identity ── */
+
+	.cover-top {
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+	}
+
+	.cover-name {
+		font-family: var(--mono);
+		font-size: 0.8125rem;
+		letter-spacing: 0.1em;
+		color: var(--chalk);
+	}
+
+	.cover-tagline {
+		font-size: 0.875rem;
+		line-height: 1.55;
+		color: var(--stone-soft);
+		max-width: 34ch;
+	}
+
+	/* ── Title ── */
+
+	.cover-rule {
+		display: block;
+		height: 1px;
+		background: var(--stone-line);
+		transform-origin: left center;
+		margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+	}
+
+	.cover-title {
+		margin: 0;
+		font-family: var(--display);
+		font-size: clamp(2.05rem, 7.4vw, 5.25rem);
+		font-weight: 400;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+		color: var(--stone-title);
+		max-width: 18ch;
+	}
+
+	/* The wipe needs a block box, and each sentence gets its own. */
+	.cover-line {
+		display: block;
+	}
+
+	/* Emphasis by value, not by hue: stone carries no ink. */
+	.cover-key {
+		color: var(--chalk);
+	}
+
+	.cover-sub {
+		margin: clamp(1.75rem, 3.5vw, 2.5rem) 0 0;
+		font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
+		line-height: 1.65;
+		color: var(--stone-soft);
+		max-width: 52ch;
+	}
+
+	/* A cut sheet of the paper you are about to enter, laid on the stone. */
+	.cover-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.85rem;
+		margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+		padding: 0.9rem 1.35rem;
+		border-radius: 2px;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: var(--mono);
+		font-size: 0.8125rem;
+		letter-spacing: 0.04em;
+		text-decoration: none;
+		transition: background 320ms var(--ease);
+	}
+
+	.cover-cta:hover {
+		background: var(--chalk);
+	}
+
+	.cover-arrow {
+		transition: transform 320ms var(--ease);
+	}
+
+	.cover-cta:hover .cover-arrow {
+		transform: translateX(4px);
+	}
+
+	/* ── Caption ── */
+
+	.cover-foot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.4rem 1.25rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--stone-line);
+	}
+
+	.cover-place {
+		font-family: var(--mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		color: var(--chalk);
+	}
+
+	.cover-note {
+		margin: 0;
+		font-size: 0.8125rem;
+		line-height: 1.55;
+		color: var(--stone-soft);
+		max-width: 46ch;
+	}
+
+	/*
+	 * The sheet plots itself: the rule is drawn, then each line of the title is
+	 * swept in from the left, then the caption registers. One movement, once.
+	 * Un-animated state is the final state, so this degrades to a plain page.
+	 */
+	@media (prefers-reduced-motion: no-preference) {
+		.cover-top,
+		.cover-sub,
+		.cover-cta,
+		.cover-foot {
+			animation: cover-settle 420ms var(--ease) backwards;
+		}
+
+		.cover-rule {
+			animation: cover-draw 460ms var(--ease-plot) 120ms backwards;
+		}
+
+		.cover-line {
+			animation: cover-plot 560ms var(--ease-plot) backwards;
+		}
+
+		.cover-line:first-child {
+			animation-delay: 220ms;
+		}
+
+		.cover-line:last-child {
+			animation-delay: 360ms;
+		}
+
+		.cover-sub {
+			animation-delay: 600ms;
+		}
+
+		.cover-cta {
+			animation-delay: 680ms;
+		}
+
+		.cover-foot {
+			animation-delay: 720ms;
+		}
+	}
+
+	@keyframes cover-draw {
+		from {
+			transform: scaleX(0);
+		}
+	}
+
+	@keyframes cover-plot {
+		from {
+			clip-path: inset(0 100% 0 0);
+		}
+	}
+
+	@keyframes cover-settle {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+	}
+</style>
