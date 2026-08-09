@@ -9,29 +9,32 @@
  * on stone, hierarchy is carried by value instead of hue.
  */
 :root {
-	/* Cyanotype. The cover is the exposed print; the document is the tracing
-	   paper it was drawn on. Line values are tuned so the drawing can fill the
+	/* Van Dyke brownprint — the warm reprographic process engineers printed on
+	   before blueline. The cover is the exposed print; the document is the
+	   manila it was drawn on. Line values are tuned so the drawing can fill the
 	   sheet without ever competing with the type set over it. */
-	--stone: #0e3352;
-	--stone-line: #1d4a70;
-	--stone-soft: #7fb2ce;
-	--stone-title: #8fbdd6;
-	--chalk: #eaf2f6;
+	--stone: #3a2418;
+	--stone-line: #5a3d2a;
+	--stone-soft: #c9ae8e;
+	--stone-title: #d8c3a5;
+	--chalk: #f7eee0;
 
-	--line: #7fb2ce;
-	--line-faint: rgba(127, 178, 206, 0.22);
-	--line-ghost: rgba(127, 178, 206, 0.1);
+	--line: #e2c9a6;
+	--line-faint: rgba(226, 201, 166, 0.2);
+	--line-ghost: rgba(226, 201, 166, 0.09);
 
-	--paper: #e9eff1;
-	--ink: #12212e;
-	--ink-soft: #4a5b6b;
-	--rule: #c8d4da;
+	--paper: #f0e7d9;
+	--ink: #2a1d14;
+	--ink-soft: #6b5847;
+	--rule: #d8c9b4;
 
-	/* Minium — the orange primer painted on steel before it is finished.
-	   --signal draws on the blueprint; --accent is the same hue darkened
-	   until small text passes AA on tracing paper. */
-	--signal: #ff6b35;
-	--accent: #a83a08;
+	/* Amber draws and carries the energy; the same hue darkened passes AA as
+	   text on manila. Petrol is the counterweight, used sparingly — it is what
+	   keeps the warmth from turning sleepy. */
+	--signal: #f2a33c;
+	--accent: #964c12;
+	--signal-cool: #4eb3a8;
+	--accent-cool: #1f6f6b;
 
 	--display: "Fraunces Variable", Georgia, "Times New Roman", serif;
 	--sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
