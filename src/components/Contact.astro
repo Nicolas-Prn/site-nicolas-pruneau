@@ -18,16 +18,18 @@ import portrait from "../assets/portrait.jpg";
 		</p>
 
 		<div class="direct">
-			<Image
-				src={portrait}
-				alt="Portrait de Nicolas Pruneau"
-				width={200}
-				height={250}
-				densities={[1, 2]}
-				format="webp"
-				quality={88}
-				class="portrait"
-			/>
+			<span class="portrait-frame">
+				<Image
+					src={portrait}
+					alt="Portrait de Nicolas Pruneau"
+					width={200}
+					height={250}
+					densities={[1, 2]}
+					format="webp"
+					quality={88}
+					class="portrait"
+				/>
+			</span>
 			<div class="direct-body">
 				<p class="notice-text">
 					{
@@ -68,14 +70,39 @@ import portrait from "../assets/portrait.jpg";
 		}
 	}
 
-	/* Documented, not decorated: a rectangle, the way a photograph is printed. */
-	.portrait {
+	/*
+	 * Documented, not decorated. The photograph was shot under cold light, so it
+	 * is warmed to sit in the same room as the rest of the page: a light sepia
+	 * to pull the greys toward the paper, then an amber wash in soft light,
+	 * which lifts the warm tones without flattening the face the way sepia
+	 * alone would.
+	 */
+	.portrait-frame {
+		position: relative;
+		display: block;
 		width: clamp(7rem, 22vw, 10rem);
+		border-radius: var(--fillet);
+		overflow: hidden;
+		isolation: isolate;
+	}
+
+	.portrait-frame::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--signal);
+		mix-blend-mode: soft-light;
+		opacity: 0.35;
+		pointer-events: none;
+	}
+
+	.portrait {
+		display: block;
+		width: 100%;
 		height: auto;
 		aspect-ratio: 4 / 5;
 		object-fit: cover;
-		border-radius: 2px;
-		filter: saturate(0.88);
+		filter: sepia(0.2) saturate(1.12) contrast(1.03);
 	}
 
 	.direct-body {
