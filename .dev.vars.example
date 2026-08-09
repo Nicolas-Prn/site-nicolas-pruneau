@@ -1,18 +1,10 @@
-# Copy this file to `.dev.vars` and fill in real values.
-# `.dev.vars` is gitignored and is read only by `wrangler dev` (local runs).
-# Production values are never set here — use `npx wrangler secret put <NAME>`.
-
-# Resend API key, from https://resend.com/api-keys — starts with re_
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
-
-# Where contact messages land. Cloudflare Email Routing already forwards this
-# address to a personal inbox, so nothing more is needed for receiving.
-CONTACT_TO=contact@nicolas-pruneau.com
-
-# Sender identity. No mailbox needs to exist behind it — replies go to the
-# visitor's own address via reply_to.
+# Copy to `.dev.vars` (gitignored) for local runs of `wrangler dev`.
+# In production the same value is set with `npx wrangler secret put CONTACT_TO`.
 #
-# Verify a SUBDOMAIN in Resend, not the apex: Resend asks for an MX record for
-# its return path, and the apex MX already belongs to Email Routing. Verifying
-# send.nicolas-pruneau.com keeps incoming mail untouched.
-CONTACT_FROM=site@send.nicolas-pruneau.com
+# Where contact messages land. Cloudflare Email Sending only delivers to a
+# VERIFIED destination address — list yours with:
+#   npx wrangler email routing addresses list
+#
+# It is kept out of the tracked config because that address is a personal
+# inbox, and this repository is public.
+CONTACT_TO=you@example.com

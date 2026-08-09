@@ -2,6 +2,10 @@
  * The site is static assets served by this Worker. The only dynamic route is
  * the contact endpoint, so everything else falls straight through to the
  * asset binding.
+ *
+ * Delivery goes through Cloudflare's own Email Sending binding: no API key, no
+ * second vendor, and it sits alongside the Email Routing that already forwards
+ * contact@ to a personal inbox.
  */
 
 const FIELDS = ["name", "email", "subject", "budget", "message"];
@@ -25,6 +29,12 @@ const json = (body, status = 200) =>
 		status,
 		headers: { "content-type": "application/json; charset=utf-8" },
 	});
+
+const escapeHtml = (value) =>
+	String(value).replace(
+		/[&<>"']/g,
+		(c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+	);
 
 /** Deliberately vague to the client, precise in the logs: a validation message
  *  that enumerates what a spammer got wrong is a gift to the spammer. */
@@ -61,37 +71,37 @@ async function handleContact(request, env) {
 	const { errors, name, email, message } = validate(data);
 	if (errors.length) return json({ ok: false, error: "invalid" }, 400);
 
-	if (!env.RESEND_API_KEY || !env.CONTACT_TO || !env.CONTACT_FROM) {
-		console.error("contact: delivery is not configured");
-		return json({ ok: false, error: "unconfigured" }, 500);
-	}
-
-	const lines = [
-		`Nom : ${name}`,
-		`E-mail : ${email}`,
-		`Sujet : ${SUBJECTS[data.subject] || "non précisé"}`,
-		`Budget : ${BUDGETS[data.budget] || "non précisé"}`,
-		"",
-		message,
+	const summary = [
+		["Nom", name],
+		["E-mail", email],
+		["Sujet", SUBJECTS[data.subject] || "non précisé"],
+		["Budget", BUDGETS[data.budget] || "non précisé"],
 	];
 
-	const sent = await fetch("https://api.resend.com/emails", {
-		method: "POST",
-		headers: {
-			authorization: `Bearer ${env.RESEND_API_KEY}`,
-			"content-type": "application/json",
-		},
-		body: JSON.stringify({
-			from: env.CONTACT_FROM,
-			to: [env.CONTACT_TO],
-			reply_to: email,
-			subject: `Site — ${name}`,
-			text: lines.join("\n"),
-		}),
-	});
+	const text = [...summary.map(([k, v]) => `${k} : ${v}`), "", message].join("\n");
+	const html = [
+		"<table>",
+		...summary.map(
+			([k, v]) => `<tr><th align="left">${k}</th><td>${escapeHtml(v)}</td></tr>`
+		),
+		"</table>",
+		`<p style="white-space:pre-wrap">${escapeHtml(message)}</p>`,
+	].join("");
 
-	if (!sent.ok) {
-		console.error("contact: delivery failed", sent.status, await sent.text());
+	try {
+		await env.EMAIL.send({
+			to: env.CONTACT_TO,
+			from: { email: env.CONTACT_FROM, name: "nicolas-pruneau.com" },
+			/* So replying in the mail client answers the visitor, not the site. */
+			replyTo: email,
+			subject: `Site — ${name}`,
+			text,
+			html,
+		});
+	} catch (error) {
+		console.error("contact: delivery failed", error.code, error.message);
+		/* The sender domain not being onboarded is a setup fault, not a visitor
+		   fault, and it is the one worth naming separately in the logs. */
 		return json({ ok: false, error: "delivery" }, 502);
 	}
 
