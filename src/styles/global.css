@@ -69,6 +69,10 @@
 	/* Sized to the reading column plus its gutters. With the marginal rail gone,
 	   a wider sheet left the text stranded against the left edge. */
 	--sheet: 960px;
+
+	/* The binding — cover and colophon — runs wider than the document it holds,
+	   which is what lets the cover title sit well left of the plate. */
+	--sheet-wide: 1180px;
 	--section-pad: clamp(56px, 8vw, 112px);
 }
 
