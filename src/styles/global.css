@@ -14,6 +14,9 @@
 	   manila it was drawn on. Line values are tuned so the drawing can fill the
 	   sheet without ever competing with the type set over it. */
 	--stone: #3a2418;
+	/* Deeper than the cover ground, so a control filled with it stays an object
+	   against it rather than dissolving into it. */
+	--stone-deep: #22120a;
 	--stone-line: #5a3d2a;
 	--stone-soft: #c9ae8e;
 	--stone-title: #d8c3a5;
@@ -59,7 +62,6 @@
 
 	--gutter: clamp(20px, 5.5vw, 56px);
 	--sheet: 1180px;
-	--rail: clamp(7.5rem, 13vw, 12rem);
 	--section-pad: clamp(56px, 8vw, 112px);
 }
 
@@ -104,22 +106,14 @@ img {
 	outline-offset: 3px;
 }
 
-/* ── The sheet: one grid, one rail, collapses to a single column on phones ── */
+/* ── The sheet: a single measured column, left-aligned as the brief asks ── */
 
 .sheet {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
-	row-gap: 1.25rem;
 	max-width: var(--sheet);
 	margin-inline: auto;
 	padding-inline: var(--gutter);
-}
-
-@media (min-width: 940px) {
-	.sheet {
-		grid-template-columns: var(--rail) minmax(0, 1fr);
-		column-gap: clamp(2rem, 4vw, 4.5rem);
-	}
 }
 
 .section {
@@ -163,7 +157,9 @@ img {
 .column::before {
 	content: "";
 	position: absolute;
-	inset: -1.5rem -1.75rem;
+	inset-block: -1.5rem;
+	/* Never wider than the gutter it sits in, or the pane pushes off a phone. */
+	inset-inline: calc(-1 * min(1.75rem, var(--gutter) * 0.7));
 	z-index: -1;
 	border-radius: var(--fillet);
 	pointer-events: none;
@@ -181,7 +177,8 @@ img {
 .column::after {
 	content: "";
 	position: absolute;
-	inset: -1rem -1.25rem;
+	inset-block: -1rem;
+	inset-inline: calc(-1 * min(1.25rem, var(--gutter) * 0.5));
 	z-index: -1;
 	pointer-events: none;
 	background-image:
@@ -231,48 +228,6 @@ img {
 @supports not (backdrop-filter: blur(1px)) {
 	.column::before {
 		background: color-mix(in oklab, var(--paper) 86%, transparent);
-	}
-}
-
-/* ── Marginalia: section index, label, and the note that belongs to it ── */
-
-.rail {
-	min-width: 0;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
-	gap: 0.5rem 0.9rem;
-}
-
-.rail-index {
-	font-family: var(--mono);
-	font-size: 0.75rem;
-	letter-spacing: 0.14em;
-	color: var(--accent);
-}
-
-.rail-note {
-	margin: 0;
-	flex: 1 1 14rem;
-	font-size: 0.8125rem;
-	line-height: 1.55;
-	color: var(--ink-soft);
-	max-width: 30ch;
-}
-
-@media (min-width: 940px) {
-	.rail {
-		display: block;
-		padding-top: 0.55rem;
-	}
-
-	.rail-index {
-		display: block;
-	}
-
-	.rail-note {
-		margin-top: 0.9rem;
-		max-width: none;
 	}
 }
 

@@ -1,12 +1,24 @@
 ---
 import { Image } from "astro:assets";
-import SectionHead from "./SectionHead.astro";
 import { fr } from "../lib/typography.js";
 import portrait from "../assets/portrait.jpg";
+
+const subjects = [
+	{ value: "vitrine", label: "Site vitrine" },
+	{ value: "outil", label: "Outil ou automatisation" },
+	{ value: "prototype", label: "Prototype" },
+	{ value: "inconnu", label: "Je ne sais pas encore" },
+];
+
+const budgets = [
+	{ value: "moins-750", label: "Moins de 750 €" },
+	{ value: "750-1500", label: "750 à 1 500 €" },
+	{ value: "plus-1500", label: "Plus de 1 500 €" },
+	{ value: "inconnu", label: "Je n'en ai aucune idée" },
+];
 ---
 
 <section id="contact" class="sheet section" data-sheet-section="5">
-	<SectionHead index="v" note="Réponse sous 24 à 48 heures, écrite par moi." />
 	<div class="column">
 		<h2 class="h2">Parlons-en</h2>
 		<p class="lead">
@@ -30,18 +42,61 @@ import portrait from "../assets/portrait.jpg";
 					class="portrait"
 				/>
 			</span>
-			<div class="direct-body">
-				<p class="notice-text">
-					{
-						fr(
-							"Le formulaire de contact n'est pas encore branché. En attendant, écrivez-moi directement — je réponds sous 24 à 48 heures :"
-						)
-					}
-				</p>
-				<p class="notice-email">
-					<a href="mailto:contact@nicolas-pruneau.com">contact@nicolas-pruneau.com</a>
-				</p>
-			</div>
+
+			<form class="form" method="post" action="/api/contact" data-contact-form novalidate>
+				<div class="row">
+					<div class="field">
+						<label for="name">Nom</label>
+						<input id="name" name="name" type="text" autocomplete="name" required maxlength="120" />
+					</div>
+					<div class="field">
+						<label for="email">E-mail</label>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							autocomplete="email"
+							required
+							maxlength="200"
+						/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="field">
+						<label for="subject">{fr("De quoi s'agit-il ?")}</label>
+						<select id="subject" name="subject">
+							<option value="" selected>Non précisé</option>
+							{subjects.map((s) => <option value={s.value}>{s.label}</option>)}
+						</select>
+					</div>
+					<div class="field">
+						<label for="budget">Budget envisagé</label>
+						<select id="budget" name="budget">
+							<option value="" selected>Non précisé</option>
+							{budgets.map((b) => <option value={b.value}>{fr(b.label)}</option>)}
+						</select>
+					</div>
+				</div>
+
+				<div class="field">
+					<label for="message">Décrivez votre situation en quelques lignes</label>
+					<textarea id="message" name="message" rows="5" required maxlength="5000"></textarea>
+				</div>
+
+				{/* Seen by no one, filled by bots only. */}
+				<div class="decoy" aria-hidden="true">
+					<label for="company">Société</label>
+					<input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+				</div>
+
+				<div class="actions">
+					<button type="submit" class="submit" data-origin-fill>
+						<span class="submit-label">Envoyer</span>
+					</button>
+					<p class="status" data-form-status role="status" aria-live="polite"></p>
+				</div>
+			</form>
 		</div>
 
 		<p class="phone-note micro">
@@ -57,13 +112,13 @@ import portrait from "../assets/portrait.jpg";
 <style>
 	.direct {
 		display: grid;
-		gap: clamp(1.25rem, 3vw, 2rem);
+		gap: clamp(1.5rem, 3vw, 2.5rem);
 		margin-top: clamp(2rem, 4vw, 3rem);
 		padding-top: clamp(1.75rem, 3.5vw, 2.5rem);
 		border-top: 1px solid var(--rule);
 	}
 
-	@media (min-width: 34em) {
+	@media (min-width: 44em) {
 		.direct {
 			grid-template-columns: auto minmax(0, 1fr);
 			align-items: start;
@@ -72,10 +127,7 @@ import portrait from "../assets/portrait.jpg";
 
 	/*
 	 * Documented, not decorated. The photograph was shot under cold light, so it
-	 * is warmed to sit in the same room as the rest of the page: a light sepia
-	 * to pull the greys toward the paper, then an amber wash in soft light,
-	 * which lifts the warm tones without flattening the face the way sepia
-	 * alone would.
+	 * is warmed just enough to sit in the same room as the rest of the page.
 	 */
 	.portrait-frame {
 		position: relative;
@@ -105,33 +157,162 @@ import portrait from "../assets/portrait.jpg";
 		filter: sepia(0.07) saturate(1.05);
 	}
 
-	.direct-body {
+	/* ── The form ── */
+
+	.form {
+		display: grid;
+		gap: 1.25rem;
 		min-width: 0;
 	}
 
-	.notice-text {
-		margin: 0;
-		font-size: 1rem;
-		line-height: 1.7;
-		color: var(--ink-soft);
-		max-width: 52ch;
+	.row {
+		display: grid;
+		gap: 1.25rem;
 	}
 
-	.notice-email {
-		margin: 0.9rem 0 0;
+	@media (min-width: 34em) {
+		.row {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.field {
+		display: grid;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.field label {
 		font-family: var(--mono);
-		font-size: clamp(0.875rem, 2.6vw, 1.0625rem);
-		overflow-wrap: anywhere;
-	}
-
-	.notice-email a {
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
 		color: var(--accent);
-		text-decoration-thickness: 1px;
-		text-underline-offset: 4px;
 	}
 
-	.notice-email a:hover {
+	.field input,
+	.field select,
+	.field textarea {
+		width: 100%;
+		padding: 0.7rem 0.85rem;
+		border: 1px solid var(--rule);
+		border-radius: var(--fillet);
+		background: color-mix(in oklab, var(--paper) 72%, transparent);
 		color: var(--ink);
+		font-family: var(--sans);
+		font-size: 1rem;
+		line-height: 1.5;
+		transition:
+			border-color 220ms var(--ease),
+			background 220ms var(--ease);
+	}
+
+	.field textarea {
+		resize: vertical;
+		min-height: 7rem;
+	}
+
+	.field input:hover,
+	.field select:hover,
+	.field textarea:hover {
+		border-color: color-mix(in oklab, var(--accent) 45%, var(--rule));
+	}
+
+	.field input:focus-visible,
+	.field select:focus-visible,
+	.field textarea:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
+		border-color: transparent;
+		background: var(--paper);
+	}
+
+	/* The browser's own message is the only one that knows what is wrong, so the
+	   field simply marks itself and lets that message stand. */
+	.field [data-invalid] {
+		border-color: var(--accent);
+	}
+
+	.decoy {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.9rem 1.25rem;
+		margin-top: 0.25rem;
+	}
+
+	.submit {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		padding: 0.85rem 1.6rem;
+		border: 1px solid var(--accent);
+		border-radius: var(--fillet);
+		background: var(--signal);
+		color: var(--ink);
+		font-family: var(--sans);
+		font-size: 0.9375rem;
+		cursor: pointer;
+		transition: color 280ms var(--ease);
+	}
+
+	.submit::before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: var(--oy, 50%);
+		left: var(--ox, 50%);
+		width: calc(var(--or, 140px) * 2);
+		height: calc(var(--or, 140px) * 2);
+		margin: calc(var(--or, 140px) * -1);
+		border-radius: 50%;
+		background: var(--stone-deep);
+		transform: scale(0);
+		transition: transform 460ms var(--ease-plot);
+	}
+
+	.submit:hover,
+	.submit:focus-visible {
+		color: var(--chalk);
+	}
+
+	.submit:hover::before,
+	.submit:focus-visible::before {
+		transform: scale(1);
+	}
+
+	.submit[disabled] {
+		cursor: progress;
+		opacity: 0.65;
+	}
+
+	.submit-label {
+		position: relative;
+	}
+
+	.status {
+		margin: 0;
+		font-size: 0.9375rem;
+		line-height: 1.5;
+		color: var(--ink-soft);
+	}
+
+	.status[data-tone="error"] {
+		color: var(--accent);
+	}
+
+	/* ── Sent ── */
+
+	.form[data-sent] {
+		display: none;
 	}
 
 	.phone-note {

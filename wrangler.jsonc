@@ -1,7 +1,14 @@
 {
 	"name": "site-nicolas-pruneau",
 	"compatibility_date": "2026-08-08",
+	"main": "./worker/index.js",
 	"assets": {
-		"directory": "./dist"
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},
+	// RESEND_API_KEY, CONTACT_TO and CONTACT_FROM are secrets, set with
+	// `npx wrangler secret put <NAME>` — never committed to this public repo.
+	"observability": {
+		"enabled": true
 	}
 }

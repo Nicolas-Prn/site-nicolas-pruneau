@@ -424,6 +424,10 @@ const cartouche = [
 		margin-top: clamp(1.75rem, 3vw, 2.5rem);
 		padding: 0.95rem 1.5rem;
 		border-radius: var(--fillet);
+		/* The outline survives the fill, so the control keeps its shape once the
+		   ground beneath it darkens — and it covers the seam where the disc meets
+		   the fillet. */
+		border: 1px solid var(--signal);
 		background: var(--signal);
 		color: var(--ink);
 		font-family: var(--sans);
@@ -443,7 +447,7 @@ const cartouche = [
 		height: calc(var(--or, 140px) * 2);
 		margin: calc(var(--or, 140px) * -1);
 		border-radius: 50%;
-		background: var(--stone);
+		background: var(--stone-deep);
 		transform: scale(0);
 		transition: transform 460ms var(--ease-plot);
 	}

@@ -64,6 +64,55 @@ export function initMeasure() {
 }
 
 /**
+ * Submits the contact form without leaving the page, and reports what actually
+ * happened. Without script the form still posts normally, so the endpoint stays
+ * reachable either way.
+ */
+export function initContactForm() {
+	const form = document.querySelector("[data-contact-form]");
+	if (!form) return;
+
+	const status = form.querySelector("[data-form-status]");
+	const button = form.querySelector("button[type='submit']");
+	const say = (text, tone) => {
+		status.textContent = text;
+		if (tone) status.dataset.tone = tone;
+		else delete status.dataset.tone;
+	};
+
+	form.addEventListener("submit", async (event) => {
+		event.preventDefault();
+
+		/* Let the browser explain what is missing — it does it in the visitor's
+		   own language and reads it to a screen reader. */
+		if (!form.checkValidity()) {
+			form.reportValidity();
+			return;
+		}
+
+		button.disabled = true;
+		say("Envoi en cours…");
+
+		try {
+			const response = await fetch(form.action, {
+				method: "POST",
+				body: new FormData(form),
+				headers: { accept: "application/json" },
+			});
+			const result = await response.json().catch(() => ({}));
+
+			if (!response.ok || !result.ok) throw new Error(result.error || "failed");
+
+			form.dataset.sent = "";
+			say("Message envoyé. Je vous réponds sous 24 à 48 heures.");
+		} catch {
+			button.disabled = false;
+			say("L'envoi a échoué. Écrivez-moi directement à contact@nicolas-pruneau.com.", "error");
+		}
+	});
+}
+
+/**
  * Records where the pointer crossed the edge, so the fill grows from that exact
  * point rather than from the middle. Keyboard focus falls back to the centre,
  * the only honest origin when there is no pointer.
