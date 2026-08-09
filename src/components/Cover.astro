@@ -32,65 +32,67 @@ const cartouche = [
 			<pattern id="hatch-dense" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
 				<line x1="0" y1="0" x2="0" y2="4" class="s-faint"></line>
 			</pattern>
-			<clipPath id="clip-sector">
-				<path d="M860 430 L860 110 A320 320 0 0 1 1140 590 Z"></path>
-			</clipPath>
 		</defs>
 
-		<!-- Radiating construction from the centre of the primary circle -->
+		<!-- ── PLAN VIEW: a plate, chamfered at one corner, drilled asymmetrically ── -->
+		<path
+			d="M500 150 L1080 150 L1160 230 L1160 470 L500 470 Z"
+			class="s-line"></path>
+
+		<!-- Bore with counterbore, and a slot -->
+		<circle cx="640" cy="310" r="62" class="s-line"></circle>
+		<circle cx="640" cy="310" r="88" class="s-faint"></circle>
+		<path d="M820 250 h70 a26 26 0 0 1 0 52 h-70 a26 26 0 0 1 0 -52 z" class="s-line"></path>
+		<circle cx="960" cy="220" r="24" class="s-line"></circle>
+		<circle cx="960" cy="400" r="24" class="s-line"></circle>
+		<circle cx="1100" cy="310" r="32" class="s-line"></circle>
+
+		<!-- Centre lines: chain-dash through every axis, overrunning the feature -->
+		<g class="s-axis">
+			<path d="M540 310 H1160M640 210 V410"></path>
+			<path d="M820 276 H910M820 230 V322M890 230 V322"></path>
+			<path d="M960 186 V254M926 220 H994M960 366 V434M926 400 H994"></path>
+			<path d="M1100 264 V356"></path>
+		</g>
+
+		<!-- Hidden edge inside the body -->
+		<path d="M1080 150 L1080 470" class="s-hidden"></path>
+
+		<!-- ── Projection lines tying the plan to the elevation below ── -->
 		<g class="s-ghost">
-			<line x1="860" y1="430" x2="60" y2="30"></line>
-			<line x1="860" y1="430" x2="60" y2="230"></line>
-			<line x1="860" y1="430" x2="40" y2="430"></line>
-			<line x1="860" y1="430" x2="60" y2="630"></line>
-			<line x1="860" y1="430" x2="60" y2="830"></line>
-			<line x1="860" y1="430" x2="1180" y2="60"></line>
-			<line x1="860" y1="430" x2="1180" y2="800"></line>
-			<line x1="860" y1="430" x2="860" y2="880"></line>
-			<line x1="860" y1="430" x2="860" y2="20"></line>
+			<path d="M500 470 V600M640 398 V600M820 470 V600M890 470 V600M960 470 V600M1100 470 V600M1160 470 V600"></path>
 		</g>
 
-		<!-- Hatched sector -->
-		<rect x="540" y="110" width="640" height="640" fill="url(#hatch)" clip-path="url(#clip-sector)"></rect>
-
-		<!-- Primary circle and its family -->
-		<circle cx="860" cy="430" r="320" class="s-line"></circle>
-		<circle cx="860" cy="430" r="240" class="s-faint"></circle>
-		<circle cx="860" cy="430" r="160" class="s-faint"></circle>
-		<circle cx="860" cy="430" r="80" class="s-ghost"></circle>
-		<circle cx="860" cy="430" r="4" class="f-signal"></circle>
-
-		<!-- Inscribed square, rotated 45°, and its diagonals -->
-		<rect x="633" y="203" width="454" height="454" class="s-faint"></rect>
-		<path d="M860 110 L1180 430 L860 750 L540 430 Z" class="s-line"></path>
-		<path d="M633 203 L1087 657M1087 203 L633 657" class="s-ghost"></path>
-
-		<!-- Tangent construction, upper right -->
-		<path d="M860 110 L1180 110 L1180 430" class="s-ghost"></path>
-		<path d="M1100 110 L1100 150M1140 110 L1140 150M1180 190 L1140 190M1180 230 L1140 230" class="s-faint"></path>
-
-		<!-- Secondary arc family, lower left -->
-		<path d="M120 900 A560 560 0 0 1 680 340" class="s-faint"></path>
-		<path d="M120 900 A470 470 0 0 1 590 430" class="s-ghost"></path>
-		<path d="M120 900 A650 650 0 0 1 770 250" class="s-ghost"></path>
-
-		<!-- Hatched band, kept off the foot so the cartouche never sits on it -->
-		<rect x="540" y="756" width="640" height="26" fill="url(#hatch-dense)"></rect>
-
-		<!-- Isometric solid, an axonometric of nothing in particular: the object
-		     under study is the page itself -->
-		<g class="s-line" transform="translate(150 560)">
-			<path d="M0 60 L104 0 L208 60 L104 120 Z"></path>
-			<path d="M0 60 L0 170 L104 230 L104 120M208 60 L208 170 L104 230" class="s-faint"></path>
-			<path d="M104 0 L104 120" class="s-ghost"></path>
+		<!-- ── ELEVATION, in section: hatching only inside the cut material ── -->
+		<path d="M500 600 H1160 V680 H500 Z" class="s-line"></path>
+		<rect x="500" y="600" width="660" height="80" fill="url(#hatch)"></rect>
+		<g class="s-hidden">
+			<path d="M578 600 V680M702 600 V680M794 600 V680M846 600 V680M936 600 V680M984 600 V680M1068 600 V680M1132 600 V680"></path>
 		</g>
 
-		<!-- Extension and dimension lines measuring the primary circle.
-		     Held well inside the viewBox: `slice` crops the edges. -->
+		<!-- ── Dimension chain: extension lines, then a ladder of cotes ── -->
 		<g class="s-signal">
-			<path d="M540 680 L540 720M1180 680 L1180 720"></path>
-			<path d="M540 700 L1180 700"></path>
-			<path d="M552 694 L540 700 L552 706M1168 694 L1180 700 L1168 706"></path>
+			<path d="M500 690 V760M640 690 V760M960 690 V760M1160 690 V760" class="s-ext"></path>
+			<path d="M500 736 H640M640 736 H960M960 736 H1160"></path>
+			<path d="M512 730 L500 736 L512 742M628 730 L640 736 L628 742"></path>
+			<path d="M652 730 L640 736 L652 742M948 730 L960 736 L948 742"></path>
+			<path d="M972 730 L960 736 L972 742M1148 730 L1160 736 L1148 742"></path>
+		</g>
+
+		<!-- Overall dimension, set below the chain as convention requires -->
+		<g class="s-signal">
+			<path d="M500 736 V790M1160 736 V790" class="s-ext"></path>
+			<path d="M500 776 H1160"></path>
+			<path d="M512 770 L500 776 L512 782M1148 770 L1160 776 L1148 782"></path>
+		</g>
+
+		<!-- ── Detail callout, leadered out to an enlarged view ── -->
+		<circle cx="1100" cy="310" r="66" class="s-detail"></circle>
+		<path d="M1147 263 L1190 205" class="s-signal"></path>
+
+		<!-- ── Sheet zone references down the right border ── -->
+		<g class="s-faint">
+			<path d="M1176 60 H1200M1176 260 H1200M1176 460 H1200M1176 660 H1200M1176 860 H1200"></path>
 		</g>
 	</svg>
 
@@ -114,8 +116,8 @@ const cartouche = [
 				indépendants, commerces, ASBL et jeunes entreprises.
 			</p>
 
-			<a href="#contact" class="cta">
-				Me contacter
+			<a href="#contact" class="cta" data-origin-fill>
+				<span class="cta-label">Me contacter</span>
 				<svg class="cta-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false">
 					<path d="M0 6H18M13 1L18 6L13 11"></path>
 				</svg>
@@ -210,9 +212,33 @@ const cartouche = [
 		stroke-opacity: 0.9;
 	}
 
-	.plate :global(.f-signal) {
-		fill: var(--signal);
-		stroke: none;
+	/* Centre lines are chain-dash and overrun the feature they axis, the way
+	   they do on a real plate. */
+	.plate :global(.s-axis) {
+		stroke: var(--line);
+		stroke-width: 1;
+		stroke-opacity: 0.4;
+		stroke-dasharray: 26 6 5 6;
+	}
+
+	/* Edges the eye cannot see through the material */
+	.plate :global(.s-hidden) {
+		stroke: var(--line);
+		stroke-width: 1;
+		stroke-opacity: 0.3;
+		stroke-dasharray: 9 7;
+	}
+
+	.plate :global(.s-detail) {
+		stroke: var(--signal);
+		stroke-width: 1;
+		stroke-opacity: 0.75;
+		stroke-dasharray: 8 6;
+	}
+
+	/* Extension lines are thinner than the dimension line they carry */
+	.plate :global(.s-ext) {
+		stroke-opacity: 0.45;
 	}
 
 	.cover-inner {
@@ -303,7 +329,15 @@ const cartouche = [
 		color: var(--stone-soft);
 	}
 
+	/*
+	 * The fill grows from wherever the pointer crossed the edge — the origin is
+	 * set by script, the motion is CSS. Falls back to a plain colour swap where
+	 * the custom properties never arrive.
+	 */
 	.cta {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.85rem;
@@ -315,11 +349,41 @@ const cartouche = [
 		font-family: var(--sans);
 		font-size: 0.9375rem;
 		text-decoration: none;
-		transition: background 240ms var(--ease);
+		transition: color 280ms var(--ease);
 	}
 
-	.cta:hover {
-		background: #ff8659;
+	.cta::before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: var(--oy, 50%);
+		left: var(--ox, 50%);
+		width: calc(var(--or, 120px) * 2);
+		height: calc(var(--or, 120px) * 2);
+		margin: calc(var(--or, 120px) * -1);
+		border-radius: 50%;
+		background: var(--stone);
+		transform: scale(0);
+		transition: transform 460ms var(--ease-plot);
+	}
+
+	.cta:hover,
+	.cta:focus-visible {
+		color: var(--chalk);
+	}
+
+	.cta:hover::before,
+	.cta:focus-visible::before {
+		transform: scale(1);
+	}
+
+	.cta:active {
+		transform: scale(0.985);
+	}
+
+	.cta-label,
+	.cta-arrow {
+		position: relative;
 	}
 
 	.cta-arrow {
@@ -328,7 +392,7 @@ const cartouche = [
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1.5;
-		transition: transform 240ms var(--ease);
+		transition: transform 280ms var(--ease);
 	}
 
 	.cta:hover .cta-arrow {
