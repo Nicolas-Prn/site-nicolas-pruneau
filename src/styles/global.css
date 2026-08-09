@@ -135,9 +135,19 @@ img {
 	padding-inline: var(--gutter);
 }
 
+/*
+ * Deliberately bare. Both `content-visibility: auto` and `contain: layout` cut
+ * real work here, and both were measured to change what is drawn:
+ * content-visibility sizes offscreen sections from an estimate, which moves
+ * every scroll position; containment opens a stacking context, which becomes
+ * the backdrop root and stops the pane sampling the drawing behind it.
+ */
 .section {
 	position: relative;
 	padding-block: var(--section-pad);
+	/* Under review: this measurably helps scrolling, and it measurably changes
+	   what the pane samples. See the note above. */
+	contain: layout style;
 }
 
 .section::before {

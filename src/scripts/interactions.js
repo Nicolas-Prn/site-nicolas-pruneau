@@ -197,11 +197,22 @@ export function initFaq() {
 		});
 	});
 
-	window.addEventListener("resize", () => {
-		items.forEach((item) => {
-			if (item.button.getAttribute("aria-expanded") === "true") {
-				item.panel.style.maxHeight = `${item.panel.scrollHeight}px`;
-			}
-		});
-	});
+	/* Coalesced into one frame: a phone fires resize continuously while the URL
+	   bar collapses, and measuring scrollHeight forces a layout each time. */
+	let pending = 0;
+	window.addEventListener(
+		"resize",
+		() => {
+			if (pending) return;
+			pending = requestAnimationFrame(() => {
+				pending = 0;
+				items.forEach((item) => {
+					if (item.button.getAttribute("aria-expanded") === "true") {
+						item.panel.style.maxHeight = `${item.panel.scrollHeight}px`;
+					}
+				});
+			});
+		},
+		{ passive: true }
+	);
 }
