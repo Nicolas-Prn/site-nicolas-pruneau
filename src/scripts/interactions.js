@@ -64,28 +64,37 @@ export function initMeasure() {
 }
 
 /**
- * Records where the pointer crossed the edge, so the fill can grow from that
- * exact point rather than from the middle. Keyboard focus falls back to the
- * centre, which is the only honest origin when there is no pointer.
+ * Keeps the way to reach him one tap away through the middle of the document,
+ * and stands down once the contact section is on screen — offering a shortcut
+ * to something already in front of you is just clutter.
  */
-export function initOriginFill() {
-	document.querySelectorAll("[data-origin-fill]").forEach((el) => {
-		const setOrigin = (x, y) => {
-			const rect = el.getBoundingClientRect();
-			el.style.setProperty("--ox", `${x - rect.left}px`);
-			el.style.setProperty("--oy", `${y - rect.top}px`);
-			/* Radius that still covers the far corner from wherever we started. */
-			const dx = Math.max(x - rect.left, rect.right - x);
-			const dy = Math.max(y - rect.top, rect.bottom - y);
-			el.style.setProperty("--or", `${Math.ceil(Math.hypot(dx, dy))}px`);
-		};
+export function initContactDock() {
+	const dock = document.querySelector("[data-dock]");
+	const contact = document.querySelector("#contact");
+	const cover = document.querySelector(".cover");
+	if (!dock || !contact || !cover) return;
 
-		el.addEventListener("pointerenter", (event) => setOrigin(event.clientX, event.clientY));
-		el.addEventListener("focus", () => {
-			const rect = el.getBoundingClientRect();
-			setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
-		});
-	});
+	let coverVisible = true;
+	let contactVisible = false;
+
+	const apply = () => {
+		const show = !coverVisible && !contactVisible;
+		dock.hidden = false;
+		dock.dataset.state = show ? "in" : "out";
+	};
+
+	const watch = (target, assign) =>
+		new IntersectionObserver(
+			([entry]) => {
+				assign(entry.isIntersecting);
+				apply();
+			},
+			{ threshold: 0 }
+		).observe(target);
+
+	watch(cover, (v) => (coverVisible = v));
+	watch(contact, (v) => (contactVisible = v));
+	apply();
 }
 
 /**

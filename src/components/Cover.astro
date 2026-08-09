@@ -152,10 +152,10 @@ const cartouche = [
 				indépendants, commerces, ASBL et jeunes entreprises.
 			</p>
 
-			<a href="#contact" class="cta" data-origin-fill>
+			<a href="#contact" class="cta">
 				<span class="cta-label">Me contacter</span>
-				<svg class="cta-arrow" viewBox="0 0 20 12" aria-hidden="true" focusable="false">
-					<path d="M0 6H18M13 1L18 6L13 11"></path>
+				<svg class="cta-arrow" viewBox="0 0 12 20" aria-hidden="true" focusable="false">
+					<path d="M6 0V18M1 13L6 18L11 13"></path>
 				</svg>
 			</a>
 		</div>
@@ -432,19 +432,16 @@ const cartouche = [
 		transition: color 280ms var(--ease);
 	}
 
+	/* The fill descends, the way the eye is being asked to travel. */
 	.cta::before {
 		content: "";
 		position: absolute;
+		inset: 0;
 		z-index: -1;
-		top: var(--oy, 50%);
-		left: var(--ox, 50%);
-		width: calc(var(--or, 120px) * 2);
-		height: calc(var(--or, 120px) * 2);
-		margin: calc(var(--or, 120px) * -1);
-		border-radius: 50%;
 		background: var(--stone);
-		transform: scale(0);
-		transition: transform 460ms var(--ease-plot);
+		transform: scaleY(0);
+		transform-origin: top;
+		transition: transform 520ms var(--ease-plot);
 	}
 
 	.cta:hover,
@@ -454,7 +451,7 @@ const cartouche = [
 
 	.cta:hover::before,
 	.cta:focus-visible::before {
-		transform: scale(1);
+		transform: scaleY(1);
 	}
 
 	.cta:active {
@@ -467,16 +464,19 @@ const cartouche = [
 	}
 
 	.cta-arrow {
-		width: 20px;
-		height: 12px;
+		width: 12px;
+		height: 20px;
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1.5;
-		transition: transform 280ms var(--ease);
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 520ms var(--ease-plot);
 	}
 
-	.cta:hover .cta-arrow {
-		transform: translateX(4px);
+	.cta:hover .cta-arrow,
+	.cta:focus-visible .cta-arrow {
+		transform: translateY(3px);
 	}
 
 	/* ── Title block ── */

@@ -171,12 +171,8 @@
 		transition: transform 680ms var(--ease-plot);
 	}
 
-	/* The drawing keeps out of the reading column, as it does on the cover. */
-	@media (min-width: 56em) {
-		.sheets-stage {
-			mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 48%, #000 70%);
-		}
-	}
+	/* No mask here: the tracing sheet over the reading column is what protects
+	   the text now, so the drawing is free to run the full width beneath it. */
 
 	.sheet {
 		position: absolute;
