@@ -61,7 +61,9 @@
 
 
 	--gutter: clamp(20px, 5.5vw, 56px);
-	--sheet: 1180px;
+	/* Sized to the reading column plus its gutters. With the marginal rail gone,
+	   a wider sheet left the text stranded against the left edge. */
+	--sheet: 960px;
 	--section-pad: clamp(56px, 8vw, 112px);
 }
 
@@ -142,10 +144,14 @@ img {
  * production-grade everywhere, and the mask dissolves the edges so this reads
  * as a laid sheet rather than a card.
  */
+/* The measure is fixed, so the slack inside the sheet is split evenly rather
+   than all falling on one side. Text stays left-aligned; only the block is
+   centred. */
 .column {
 	position: relative;
 	min-width: 0;
 	max-width: 44rem;
+	margin-inline: auto;
 }
 
 /*
