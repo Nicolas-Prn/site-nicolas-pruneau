@@ -1,39 +1,63 @@
 ---
+/*
+ * The cover is a drawing sheet. The apparatus is real: registration marks sit
+ * at the trim corners, a dimension line measures the title column, and the
+ * cartouche carries the fields an engineering title block actually carries.
+ * Every value in it is true, including the scale — the page is shown at 1:1.
+ */
+const cartouche = [
+	{ field: "Dessinateur", value: "Nicolas Pruneau" },
+	{ field: "Objet", value: "Sites web et outils sur mesure" },
+	{ field: "Lieu", value: "Mons · Binche, Belgique" },
+	{ field: "Échelle", value: "1:1" },
+];
 ---
 
 <header class="cover">
 	<div class="cover-inner">
-		<div class="cover-top">
-			<span class="cover-name">Nicolas Pruneau</span>
-			<span class="cover-tagline">
-				Étudiant ingénieur civil en informatique, sites web et outils sur mesure
-			</span>
-		</div>
+		<span class="mark mark-tl" aria-hidden="true"></span>
+		<span class="mark mark-tr" aria-hidden="true"></span>
+		<span class="mark mark-bl" aria-hidden="true"></span>
+		<span class="mark mark-br" aria-hidden="true"></span>
 
-		<div class="cover-middle">
-			<span class="cover-rule" aria-hidden="true"></span>
-			<h1 class="cover-title">
-				<span class="cover-line">Un site, un outil interne, un prototype.</span>
-				<span class="cover-line">
-					Je conçois <span class="cover-key">ce qui n'existe pas encore</span>.
+		<div class="plate">
+			<h1 class="title">
+				<span class="line">Un site, un outil interne, un prototype.</span>
+				<span class="line">
+					Je conçois <span class="key">ce qui n'existe pas encore</span>.
 				</span>
 			</h1>
-			<p class="cover-sub">
+
+			<svg class="dimension" viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true">
+				<path d="M0.5 1V11M399.5 1V11" />
+				<path d="M0.5 6H399.5" />
+				<path d="M6 3L1 6L6 9M394 3L399 6L394 9" fill="none" />
+			</svg>
+
+			<p class="sub">
 				Étudiant ingénieur civil à la Faculté Polytechnique de Mons, orientation informatique et
 				intelligence artificielle. Je conçois des sites vitrines et des outils sur mesure pour les
-				indépendants, commerces, ASBL et jeunes entreprises. Région de Mons et Binche, ou à
-				distance.
+				indépendants, commerces, ASBL et jeunes entreprises.
 			</p>
-			<a href="#contact" class="cover-cta">
+
+			<a href="#contact" class="cta">
 				Me contacter
-				<span class="cover-arrow" aria-hidden="true">→</span>
+				<svg class="cta-arrow" viewBox="0 0 20 12" aria-hidden="true">
+					<path d="M0 6H18M13 1L18 6L13 11" />
+				</svg>
 			</a>
 		</div>
 
-		<div class="cover-foot">
-			<span class="cover-place">Mons · Binche</span>
-			<p class="cover-note">Belgique, ou à distance quand la distance ne change rien.</p>
-		</div>
+		<dl class="cartouche">
+			{
+				cartouche.map((row) => (
+					<div class="field">
+						<dt>{row.field}</dt>
+						<dd>{row.value}</dd>
+					</div>
+				))
+			}
+		</dl>
 	</div>
 </header>
 
@@ -44,194 +68,250 @@
 	}
 
 	.cover-inner {
+		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: clamp(2.5rem, 7vw, 5rem);
 		min-height: 100vh;
 		min-height: 100svh;
 		max-width: var(--sheet);
 		margin-inline: auto;
-		padding: clamp(1.75rem, 4.5vw, 3rem) var(--gutter) clamp(1.5rem, 3.5vw, 2.5rem);
+		/* The trim marks live inside this padding, so the bottom band has to stay
+		   clear of the cartouche rather than crossing it. */
+		padding: clamp(2.75rem, 6vw, 4.5rem) var(--gutter) clamp(3.5rem, 6vw, 5rem);
 	}
 
-	.cover-middle {
-		margin-block: auto;
+	/* ── Registration marks at the trim corners ── */
+
+	.mark {
+		position: absolute;
+		width: 22px;
+		height: 22px;
 	}
 
-	/* ── Identity ── */
-
-	.cover-top {
-		display: flex;
-		flex-direction: column;
-		gap: 0.55rem;
+	.mark::before,
+	.mark::after {
+		content: "";
+		position: absolute;
+		background: var(--signal);
 	}
 
-	.cover-name {
-		font-family: var(--mono);
-		font-size: 0.8125rem;
-		letter-spacing: 0.1em;
-		color: var(--chalk);
+	.mark::before {
+		inset-block: 0;
+		left: 50%;
+		width: 1px;
 	}
 
-	.cover-tagline {
-		font-size: 0.875rem;
-		line-height: 1.55;
-		color: var(--stone-soft);
-		max-width: 34ch;
-	}
-
-	/* ── Title ── */
-
-	.cover-rule {
-		display: block;
+	.mark::after {
+		inset-inline: 0;
+		top: 50%;
 		height: 1px;
-		background: var(--stone-line);
-		transform-origin: left center;
-		margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
 	}
 
-	.cover-title {
+	.mark-tl {
+		top: 1.25rem;
+		left: calc(var(--gutter) - 11px);
+	}
+	.mark-tr {
+		top: 1.25rem;
+		right: calc(var(--gutter) - 11px);
+	}
+	.mark-bl {
+		bottom: 1.25rem;
+		left: calc(var(--gutter) - 11px);
+	}
+	.mark-br {
+		bottom: 1.25rem;
+		right: calc(var(--gutter) - 11px);
+	}
+
+	/* ── The drawn block ── */
+
+	/* The column is set in absolute units: `ch` here would resolve against the
+	   body sans, not the display face the title is actually set in. */
+	.plate {
+		margin-block: auto;
+		max-width: min(100%, 44rem);
+	}
+
+	.title {
 		margin: 0;
 		font-family: var(--display);
-		font-size: clamp(2.05rem, 7.4vw, 5.25rem);
+		font-size: clamp(2.05rem, 7.2vw, 5rem);
 		font-weight: 400;
-		line-height: 1.08;
+		line-height: 1.06;
 		letter-spacing: -0.02em;
 		color: var(--stone-title);
-		max-width: 18ch;
 	}
 
-	/* The wipe needs a block box, and each sentence gets its own. */
-	.cover-line {
+	.line {
 		display: block;
 	}
 
-	/* Emphasis by value, not by hue: stone carries no ink. */
-	.cover-key {
+	.key {
 		color: var(--chalk);
 	}
 
-	.cover-sub {
-		margin: clamp(1.75rem, 3.5vw, 2.5rem) 0 0;
+	.dimension {
+		display: block;
+		width: 100%;
+		height: 12px;
+		margin-top: clamp(1rem, 2vw, 1.5rem);
+		stroke: var(--signal);
+		stroke-width: 1;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.dimension path {
+		fill: none;
+	}
+
+	.sub {
+		margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+		max-width: 48ch;
 		font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
 		line-height: 1.65;
 		color: var(--stone-soft);
-		max-width: 52ch;
 	}
 
-	/* A cut sheet of the paper you are about to enter, laid on the stone. */
-	.cover-cta {
+	.cta {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.85rem;
-		margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+		margin-top: clamp(1.75rem, 3vw, 2.5rem);
 		padding: 0.9rem 1.35rem;
 		border-radius: 2px;
-		background: var(--paper);
-		color: var(--ink);
-		font-family: var(--mono);
-		font-size: 0.8125rem;
-		letter-spacing: 0.04em;
+		background: var(--signal);
+		color: #ffffff;
+		font-family: var(--sans);
+		font-size: 0.9375rem;
 		text-decoration: none;
-		transition: background 320ms var(--ease);
+		transition: background 240ms var(--ease);
 	}
 
-	.cover-cta:hover {
-		background: var(--chalk);
+	.cta:hover {
+		background: #f2683f;
 	}
 
-	.cover-arrow {
-		transition: transform 320ms var(--ease);
+	.cta-arrow {
+		width: 20px;
+		height: 12px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		transition: transform 240ms var(--ease);
 	}
 
-	.cover-cta:hover .cover-arrow {
+	.cta:hover .cta-arrow {
 		transform: translateX(4px);
 	}
 
-	/* ── Caption ── */
+	/* ── Title block ── */
 
-	.cover-foot {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		gap: 0.4rem 1.25rem;
-		padding-top: 1.25rem;
+	.cartouche {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+		border: 1px solid var(--stone-line);
+	}
+
+	.field {
+		display: grid;
+		grid-template-columns: 7.5rem minmax(0, 1fr);
 		border-top: 1px solid var(--stone-line);
 	}
 
-	.cover-place {
+	.field:first-child {
+		border-top: 0;
+	}
+
+	.field dt {
+		padding: 0.6rem 0.9rem;
+		border-right: 1px solid var(--stone-line);
 		font-family: var(--mono);
-		font-size: 0.75rem;
-		letter-spacing: 0.1em;
+		font-size: 0.6875rem;
+		letter-spacing: 0.08em;
+		color: var(--signal);
+	}
+
+	.field dd {
+		margin: 0;
+		padding: 0.6rem 0.9rem;
+		min-width: 0;
+		font-size: 0.8125rem;
 		color: var(--chalk);
 	}
 
-	.cover-note {
-		margin: 0;
-		font-size: 0.8125rem;
-		line-height: 1.55;
-		color: var(--stone-soft);
-		max-width: 46ch;
+	@media (min-width: 56em) {
+		.cartouche {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+
+		.field {
+			grid-template-columns: minmax(0, 1fr);
+			border-top: 0;
+			border-left: 1px solid var(--stone-line);
+		}
+
+		.field:first-child {
+			border-left: 0;
+		}
+
+		.field dt {
+			border-right: 0;
+			border-bottom: 1px solid var(--stone-line);
+		}
 	}
 
 	/*
-	 * The sheet plots itself: the rule is drawn, then each line of the title is
-	 * swept in from the left, then the caption registers. One movement, once.
-	 * Un-animated state is the final state, so this degrades to a plain page.
+	 * One authored moment: the sheet is plotted. Rules and marks are struck
+	 * first, then each line of the title is swept in from the left.
+	 * The un-animated state is the final state.
 	 */
 	@media (prefers-reduced-motion: no-preference) {
-		.cover-top,
-		.cover-sub,
-		.cover-cta,
-		.cover-foot {
-			animation: cover-settle 420ms var(--ease) backwards;
+		.mark,
+		.dimension,
+		.sub,
+		.cta,
+		.cartouche {
+			animation: settle 420ms var(--ease) backwards;
 		}
 
-		.cover-rule {
-			animation: cover-draw 460ms var(--ease-plot) 120ms backwards;
+		.line {
+			animation: plot 560ms var(--ease-plot) backwards;
 		}
 
-		.cover-line {
-			animation: cover-plot 560ms var(--ease-plot) backwards;
+		.line:first-child {
+			animation-delay: 160ms;
 		}
-
-		.cover-line:first-child {
-			animation-delay: 220ms;
+		.line:last-child {
+			animation-delay: 300ms;
 		}
-
-		.cover-line:last-child {
-			animation-delay: 360ms;
+		.dimension {
+			animation-delay: 620ms;
 		}
-
-		.cover-sub {
-			animation-delay: 600ms;
+		.sub {
+			animation-delay: 540ms;
 		}
-
-		.cover-cta {
-			animation-delay: 680ms;
+		.cta {
+			animation-delay: 660ms;
 		}
-
-		.cover-foot {
+		.cartouche {
 			animation-delay: 720ms;
 		}
-	}
-
-	@keyframes cover-draw {
-		from {
-			transform: scaleX(0);
+		.mark {
+			animation-delay: 780ms;
 		}
 	}
 
-	@keyframes cover-plot {
+	@keyframes plot {
 		from {
 			clip-path: inset(0 100% 0 0);
 		}
 	}
 
-	@keyframes cover-settle {
+	@keyframes settle {
 		from {
 			opacity: 0;
-			transform: translateY(6px);
 		}
 	}
 </style>

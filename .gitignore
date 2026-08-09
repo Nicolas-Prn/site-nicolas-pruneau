@@ -28,6 +28,8 @@ pnpm-debug.log*
 plan.md
 design-bref.md
 content/
+PRODUCT.md
+.impeccable/
 
 # design reference/prototype — read once, reimplemented as real components, not shipped as-is
 design_handoff_site_vitrine/

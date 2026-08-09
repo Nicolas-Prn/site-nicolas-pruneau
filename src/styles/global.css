@@ -19,7 +19,11 @@
 	--ink: #1c232a;
 	--ink-soft: #55606a;
 	--rule: #d3d0c8;
-	--accent: #7a2e3b;
+
+	/* Minium — the orange primer painted on steel before it is finished.
+	   --signal draws; --accent is the same hue darkened until small text passes AA. */
+	--signal: #e8532b;
+	--accent: #a8391a;
 
 	--display: "Fraunces Variable", Georgia, "Times New Roman", serif;
 	--sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
