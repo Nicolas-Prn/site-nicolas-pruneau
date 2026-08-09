@@ -60,6 +60,11 @@
 	--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.62'/%3E%3C/svg%3E");
 
 
+	/* How far the document column sits right of the sheet's left edge. Short of
+	   a true centre, so the docked button on the right does not tip the page.
+	   The cover ignores this: its title stays left to balance the plate. */
+	--bias: clamp(0px, 5vw, 4.5rem);
+
 	--gutter: clamp(20px, 5.5vw, 56px);
 	/* Sized to the reading column plus its gutters. With the marginal rail gone,
 	   a wider sheet left the text stranded against the left edge. */
@@ -144,14 +149,14 @@ img {
  * production-grade everywhere, and the mask dissolves the edges so this reads
  * as a laid sheet rather than a card.
  */
-/* The measure is fixed, so the slack inside the sheet is split evenly rather
-   than all falling on one side. Text stays left-aligned; only the block is
-   centred. */
+/* Left of centre on purpose. The docked contact button carries weight on the
+   right for the whole document, so an exactly centred column reads right-heavy
+   against it. The offset collapses to nothing on a phone. */
 .column {
 	position: relative;
 	min-width: 0;
 	max-width: 44rem;
-	margin-inline: auto;
+	margin-inline: var(--bias) auto;
 }
 
 /*
