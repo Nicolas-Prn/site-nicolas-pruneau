@@ -1,18 +1,15 @@
 ---
 /*
- * The cover is a cyanotype. The drawing is not ornament laid behind the type:
- * it is a compass-and-straightedge construction that fills the sheet the way a
- * photograph would, and the title is set into the space the construction opens
- * on the left. Everything is vector, so density costs almost nothing.
+ * The cover is a drawing sheet. The plate is not ornament laid behind the type:
+ * it is an orthographic projection that fills the sheet the way a photograph
+ * would, and the title is set into the space it leaves on the left. Everything
+ * is vector, so the density costs almost nothing.
  *
- * The cartouche carries facts a prospect can use, in the form of a title block.
+ * The identity sits at the head like a letterhead. An earlier pass ran it as a
+ * row of four bordered cells along the foot, which is the shape of a stats bar
+ * whatever the fields say — the form read as a template even though the content
+ * did not.
  */
-const cartouche = [
-	{ field: "Auteur", value: "Nicolas Pruneau" },
-	{ field: "Fonction", value: "Ingénieur civil en informatique" },
-	{ field: "Secteur", value: "Mons · Binche, ou à distance" },
-	{ field: "Réponse", value: "Sous 24 à 48 heures" },
-];
 ---
 
 <header class="cover">
@@ -130,6 +127,11 @@ const cartouche = [
 		<span class="mark mark-bl" aria-hidden="true"></span>
 		<span class="mark mark-br" aria-hidden="true"></span>
 
+		<div class="head">
+			<span class="head-name">Nicolas Pruneau</span>
+			<span class="head-role">Étudiant ingénieur civil en informatique</span>
+		</div>
+
 		<div class="block">
 			<h1 class="title">
 				<span class="line">Un site, un outil interne, un prototype.</span>
@@ -149,7 +151,8 @@ const cartouche = [
 			<p class="sub">
 				Étudiant ingénieur civil à la Faculté Polytechnique de Mons, orientation informatique et
 				intelligence artificielle. Je conçois des sites vitrines et des outils sur mesure pour les
-				indépendants, commerces, ASBL et jeunes entreprises.
+				indépendants, commerces, ASBL et jeunes entreprises. Région de Mons et Binche, ou à
+				distance.
 			</p>
 
 			<a href="#contact" class="cta" data-origin-fill>
@@ -160,16 +163,6 @@ const cartouche = [
 			</a>
 		</div>
 
-		<dl class="cartouche">
-			{
-				cartouche.map((row) => (
-					<div class="field">
-						<dt>{row.field}</dt>
-						<dd>{row.value}</dd>
-					</div>
-				))
-			}
-		</dl>
 	</div>
 </header>
 
@@ -345,6 +338,26 @@ const cartouche = [
 		right: calc(var(--gutter) - 11px);
 	}
 
+	/* A letterhead, not a block: two lines of type and no box at all. */
+	.head {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.head-name {
+		font-family: var(--mono);
+		font-size: 0.8125rem;
+		letter-spacing: 0.1em;
+		color: var(--chalk);
+	}
+
+	.head-role {
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: var(--stone-soft);
+	}
+
 	/* ── Type set into the drawing ── */
 
 	.block {
@@ -487,64 +500,6 @@ const cartouche = [
 		transform: translateY(3px);
 	}
 
-	/* ── Title block ── */
-
-	.cartouche {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
-		border: 1px solid var(--stone-line);
-		background: rgba(58, 36, 24, 0.95);
-	}
-
-	.field {
-		display: grid;
-		grid-template-columns: 6.5rem minmax(0, 1fr);
-		border-top: 1px solid var(--stone-line);
-	}
-
-	.field:first-child {
-		border-top: 0;
-	}
-
-	.field dt {
-		padding: 0.6rem 0.9rem;
-		border-right: 1px solid var(--stone-line);
-		font-family: var(--mono);
-		font-size: 0.6875rem;
-		letter-spacing: 0.08em;
-		color: var(--signal);
-	}
-
-	.field dd {
-		margin: 0;
-		padding: 0.6rem 0.9rem;
-		min-width: 0;
-		font-size: 0.8125rem;
-		color: var(--chalk);
-	}
-
-	@media (min-width: 56em) {
-		.cartouche {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
-		}
-
-		.field {
-			grid-template-columns: minmax(0, 1fr);
-			border-top: 0;
-			border-left: 1px solid var(--stone-line);
-		}
-
-		.field:first-child {
-			border-left: 0;
-		}
-
-		.field dt {
-			border-right: 0;
-			border-bottom: 1px solid var(--stone-line);
-		}
-	}
-
 	/*
 	 * One authored moment: the sheet is plotted. The construction is struck
 	 * first, then the title is swept in over it.
@@ -568,8 +523,8 @@ const cartouche = [
 		}
 
 		.sub,
+		.head,
 		.cta,
-		.cartouche,
 		.mark {
 			animation: settle 420ms var(--ease) backwards;
 		}
@@ -590,9 +545,10 @@ const cartouche = [
 		.cta {
 			animation-delay: 720ms;
 		}
-		.cartouche {
-			animation-delay: 780ms;
+		.head {
+			animation-delay: 0ms;
 		}
+
 		.mark {
 			animation-delay: 840ms;
 		}

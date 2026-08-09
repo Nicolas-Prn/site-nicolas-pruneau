@@ -24,7 +24,7 @@ const budgets = [
 		<p class="lead">
 			{
 				fr(
-					"Une idée vague, un projet précis, ou juste une question : le premier échange ne coûte rien et ne vous engage à rien."
+					"Une idée vague, un projet précis, ou juste une question : le premier échange ne coûte rien et ne vous engage à rien. Je réponds sous 24 à 48 heures."
 				)
 			}
 		</p>
@@ -96,6 +96,12 @@ const budgets = [
 					</button>
 					<p class="status" data-form-status role="status" aria-live="polite"></p>
 				</div>
+
+				<p class="privacy micro">
+					Vos coordonnées ne servent qu'à vous répondre. Le message m'arrive par e-mail, il n'est
+					enregistré dans aucune base de données et n'est utilisé à aucune autre fin. Demandez-moi
+					sa suppression quand vous le souhaitez.
+				</p>
 			</form>
 		</div>
 
@@ -307,6 +313,11 @@ const budgets = [
 
 	.status[data-tone="error"] {
 		color: var(--accent);
+	}
+
+	.privacy {
+		margin: 0.25rem 0 0;
+		max-width: 62ch;
 	}
 
 	/* ── Sent ── */
