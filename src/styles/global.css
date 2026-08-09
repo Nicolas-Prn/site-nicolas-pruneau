@@ -9,21 +9,29 @@
  * on stone, hierarchy is carried by value instead of hue.
  */
 :root {
-	--stone: #222b33;
-	--stone-line: #39434d;
-	--stone-soft: #8d99a3;
-	--stone-title: #9aa6b0;
-	--chalk: #f2f0eb;
+	/* Cyanotype. The cover is the exposed print; the document is the tracing
+	   paper it was drawn on. Line values are tuned so the drawing can fill the
+	   sheet without ever competing with the type set over it. */
+	--stone: #0e3352;
+	--stone-line: #1d4a70;
+	--stone-soft: #7fb2ce;
+	--stone-title: #8fbdd6;
+	--chalk: #eaf2f6;
 
-	--paper: #ebe8e1;
-	--ink: #1c232a;
-	--ink-soft: #55606a;
-	--rule: #d3d0c8;
+	--line: #7fb2ce;
+	--line-faint: rgba(127, 178, 206, 0.22);
+	--line-ghost: rgba(127, 178, 206, 0.1);
+
+	--paper: #e9eff1;
+	--ink: #12212e;
+	--ink-soft: #4a5b6b;
+	--rule: #c8d4da;
 
 	/* Minium — the orange primer painted on steel before it is finished.
-	   --signal draws; --accent is the same hue darkened until small text passes AA. */
-	--signal: #e8532b;
-	--accent: #a8391a;
+	   --signal draws on the blueprint; --accent is the same hue darkened
+	   until small text passes AA on tracing paper. */
+	--signal: #ff6b35;
+	--accent: #a83a08;
 
 	--display: "Fraunces Variable", Georgia, "Times New Roman", serif;
 	--sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
