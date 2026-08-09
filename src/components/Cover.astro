@@ -152,7 +152,7 @@ const cartouche = [
 				indépendants, commerces, ASBL et jeunes entreprises.
 			</p>
 
-			<a href="#contact" class="cta">
+			<a href="#contact" class="cta" data-origin-fill>
 				<span class="cta-label">Me contacter</span>
 				<svg class="cta-arrow" viewBox="0 0 12 20" aria-hidden="true" focusable="false">
 					<path d="M6 0V18M1 13L6 18L11 13"></path>
@@ -432,16 +432,20 @@ const cartouche = [
 		transition: color 280ms var(--ease);
 	}
 
-	/* The fill descends, the way the eye is being asked to travel. */
+	/* The fill grows from wherever the pointer crossed the edge. */
 	.cta::before {
 		content: "";
 		position: absolute;
-		inset: 0;
 		z-index: -1;
+		top: var(--oy, 50%);
+		left: var(--ox, 50%);
+		width: calc(var(--or, 140px) * 2);
+		height: calc(var(--or, 140px) * 2);
+		margin: calc(var(--or, 140px) * -1);
+		border-radius: 50%;
 		background: var(--stone);
-		transform: scaleY(0);
-		transform-origin: top;
-		transition: transform 520ms var(--ease-plot);
+		transform: scale(0);
+		transition: transform 460ms var(--ease-plot);
 	}
 
 	.cta:hover,
@@ -451,7 +455,7 @@ const cartouche = [
 
 	.cta:hover::before,
 	.cta:focus-visible::before {
-		transform: scaleY(1);
+		transform: scale(1);
 	}
 
 	.cta:active {

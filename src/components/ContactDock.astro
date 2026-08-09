@@ -6,7 +6,7 @@
  */
 ---
 
-<a href="#contact" class="dock" data-dock hidden>
+<a href="#contact" class="dock" data-dock data-origin-fill hidden>
 	<span class="dock-label">Me contacter</span>
 	<svg class="dock-arrow" viewBox="0 0 12 20" aria-hidden="true" focusable="false">
 		<path d="M6 0V18M1 13L6 18L11 13"></path>
@@ -47,16 +47,20 @@
 		pointer-events: none;
 	}
 
-	/* The fill descends, rather than blooming from the pointer. */
+	/* The fill grows from wherever the pointer crossed the edge. */
 	.dock::before {
 		content: "";
 		position: absolute;
-		inset: 0;
 		z-index: -1;
+		top: var(--oy, 50%);
+		left: var(--ox, 50%);
+		width: calc(var(--or, 140px) * 2);
+		height: calc(var(--or, 140px) * 2);
+		margin: calc(var(--or, 140px) * -1);
+		border-radius: 50%;
 		background: var(--stone);
-		transform: scaleY(0);
-		transform-origin: top;
-		transition: transform 520ms var(--ease-plot);
+		transform: scale(0);
+		transition: transform 460ms var(--ease-plot);
 	}
 
 	.dock:hover,
@@ -66,7 +70,7 @@
 
 	.dock:hover::before,
 	.dock:focus-visible::before {
-		transform: scaleY(1);
+		transform: scale(1);
 	}
 
 	.dock-arrow {

@@ -134,6 +134,8 @@
 		</svg>
 	</div>
 
+	<div class="grain"></div>
+
 	<div class="folio">
 		<span class="folio-label">Feuille</span>
 		<span class="folio-value" data-folio>1</span>
@@ -148,11 +150,15 @@
 		z-index: -1;
 		overflow: hidden;
 		pointer-events: none;
+		/* The stock the whole set is printed on, so the grain has something to
+		   bite into. */
+		background: var(--paper);
 	}
 
 	.sheets-grid {
 		position: absolute;
 		inset: 0;
+		z-index: 1;
 		background-image:
 			repeating-linear-gradient(to right, var(--grid-ghost) 0 1px, transparent 1px 40px),
 			repeating-linear-gradient(to bottom, var(--grid-ghost) 0 1px, transparent 1px 40px),
@@ -167,6 +173,7 @@
 	.sheets-stage {
 		position: absolute;
 		inset: 0;
+		z-index: 2;
 		transform: translateY(calc(var(--step, 0) * -5vh));
 		transition: transform 680ms var(--ease-plot);
 	}

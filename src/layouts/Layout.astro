@@ -49,8 +49,15 @@ const structuredData = {
 	<body>
 		<slot />
 		<script>
-			import { initFaq, initContactDock, initMeasure, initSheets } from "../scripts/interactions";
+			import {
+				initFaq,
+				initOriginFill,
+				initContactDock,
+				initMeasure,
+				initSheets,
+			} from "../scripts/interactions";
 			initFaq();
+			initOriginFill();
 			initContactDock();
 			initMeasure();
 			initSheets();
