@@ -34,3 +34,8 @@ PRODUCT.md
 # design reference/prototype — read once, reimplemented as real components, not shipped as-is
 design_handoff_site_vitrine/
 Spécifications typographiques et composants.zip
+
+# Cloudflare local secrets — never committed
+.dev.vars
+.dev.vars.*
+!.dev.vars.example

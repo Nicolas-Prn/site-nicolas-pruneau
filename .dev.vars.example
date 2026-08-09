@@ -1,0 +1,13 @@
+# Copy this file to `.dev.vars` and fill in real values.
+# `.dev.vars` is gitignored and is read only by `wrangler dev` (local).
+# Production values are NOT set here — see README/DEPLOY notes: they are set
+# with `npx wrangler secret put <NAME>`.
+
+# Resend API key, from https://resend.com/api-keys — starts with re_
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
+
+# Where the contact messages land.
+CONTACT_TO=contact@nicolas-pruneau.com
+
+# Sender address. MUST be on a domain verified in Resend, or Resend refuses it.
+CONTACT_FROM=site@nicolas-pruneau.com
