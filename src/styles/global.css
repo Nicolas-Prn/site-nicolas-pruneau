@@ -1,35 +1,80 @@
-@import "@fontsource/spectral/400.css";
-@import "@fontsource/spectral/600.css";
-@import "@fontsource/spectral/400-italic.css";
+@import "@fontsource-variable/fraunces/opsz.css";
 @import "@fontsource/ibm-plex-sans/400.css";
-@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-mono/400.css";
 
+/*
+ * Pierre bleue du Hainaut.
+ * Two grounds only: stone for the binding (cover + colophon), paper for the
+ * document itself. The accent is ink, so it exists on paper and nowhere else —
+ * on stone, hierarchy is carried by value instead of hue.
+ */
 :root {
-	--paper: #f7f3ed;
-	--paper-alt: #e0d2c6;
-	--ink: #45151f;
-	--accent: #7a2e3b;
-	--highlight: #c4794f;
+	/* Van Dyke brownprint — the warm reprographic process engineers printed on
+	   before blueline. The cover is the exposed print; the document is the
+	   manila it was drawn on. Line values are tuned so the drawing can fill the
+	   sheet without ever competing with the type set over it. */
+	--stone: #3a2418;
+	/* Deeper than the cover ground, so a control filled with it stays an object
+	   against it rather than dissolving into it. */
+	--stone-deep: #22120a;
+	--stone-line: #5a3d2a;
+	--stone-soft: #c9ae8e;
+	--stone-title: #d8c3a5;
+	--chalk: #f7eee0;
 
-	--font-serif: "Spectral", Georgia, serif;
-	--font-sans: "IBM Plex Sans", Helvetica, sans-serif;
+	--line: #e2c9a6;
+	--line-faint: rgba(226, 201, 166, 0.2);
+	--line-ghost: rgba(226, 201, 166, 0.09);
 
-	--ease: cubic-bezier(0.22, 0.7, 0.3, 1);
+	--paper: #f0e7d9;
+	--ink: #2a1d14;
+	--ink-soft: #6b5847;
+	--rule: #d8c9b4;
 
-	--page-margin: clamp(20px, 6vw, 96px);
-	--section-pad: clamp(40px, 6vw, 72px);
-}
+	/* The drawing continues onto the manila, in the same ink as the text but
+	   held far enough back that it never competes with reading. */
+	--draw-ink: #7a6248;
+	--grid-ghost: rgba(122, 98, 72, 0.07);
+	--grid-faint: rgba(122, 98, 72, 0.14);
 
-html {
-	-webkit-font-smoothing: antialiased;
-}
+	/* Amber draws and carries the energy; the same hue darkened passes AA as
+	   text on manila. Petrol is the counterweight, used sparingly — it is what
+	   keeps the warmth from turning sleepy. */
+	--signal: #f2a33c;
+	--accent: #964c12;
+	--signal-cool: #4eb3a8;
+	--accent-cool: #1f6f6b;
 
-body {
-	margin: 0;
-	background: var(--paper);
-	color: var(--ink);
-	font-family: var(--font-serif);
-	text-wrap: pretty;
+	--display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+	--sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+	--mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+	--ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+	/* Mechanical easing for the cover: fast start, long settle, like a pen arm. */
+	--ease-plot: cubic-bezier(0.16, 0.84, 0.36, 1);
+
+	/* The fillet radius. Sharp enough to stay drawn, soft enough to touch. */
+	--fillet: 10px;
+
+	--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.62'/%3E%3C/svg%3E");
+
+
+	/* How far the document column sits right of the sheet's left edge. Zero by
+	   default: on a phone there is no slack to distribute, and any offset just
+	   shoves the pane off centre. The desktop value is set below, where the
+	   docked button on the right actually needs counterweighting. */
+	--bias: 0px;
+
+	--gutter: clamp(20px, 5.5vw, 56px);
+	/* Sized to the reading column plus its gutters. With the marginal rail gone,
+	   a wider sheet left the text stranded against the left edge. */
+	--sheet: 960px;
+
+	/* The binding — cover and colophon — runs wider than the document it holds,
+	   which is what lets the cover title sit well left of the plate. */
+	--sheet-wide: 1180px;
+	--section-pad: clamp(56px, 8vw, 112px);
 }
 
 *,
@@ -38,90 +83,243 @@ body {
 	box-sizing: border-box;
 }
 
+html {
+	/* The manila lives here so the fixed drawing set can sit behind the document
+	   and still be seen through it. */
+	background: var(--paper);
+	color-scheme: light;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	overflow-x: clip;
+	background: transparent;
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 1.0625rem;
+	line-height: 1.65;
+	text-wrap: pretty;
+}
+
 img {
 	max-width: 100%;
 	height: auto;
 }
 
-a {
-	color: var(--accent);
-	text-decoration-thickness: 1px;
-	text-underline-offset: 3px;
-}
-
-a:hover {
-	color: var(--ink);
-}
-
 ::selection {
-	background: var(--paper-alt);
-}
-
-input,
-textarea,
-select,
-button {
-	font: inherit;
-	color: inherit;
+	background: var(--accent);
+	color: var(--paper);
 }
 
 :focus-visible {
-	outline: 1px solid var(--accent);
+	outline: 2px solid var(--accent);
 	outline-offset: 3px;
 }
 
-@keyframes om-marquee {
-	from {
-		transform: translateX(0);
-	}
-	to {
-		transform: translateX(-50%);
+/* Only once the sheet is wider than its column is there anything to bias. */
+@media (min-width: 60em) {
+	:root {
+		--bias: clamp(0px, 5vw, 4.5rem);
 	}
 }
 
-@media (prefers-reduced-motion: reduce) {
-	[data-marquee] {
-		animation: none !important;
-	}
+/* ── The sheet: a single measured column, left-aligned as the brief asks ── */
+
+.sheet {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	max-width: var(--sheet);
+	margin-inline: auto;
+	padding-inline: var(--gutter);
 }
 
-[data-reveal] {
-	opacity: 0;
-	transform: translateY(9px);
-	transition:
-		opacity 1100ms var(--ease),
-		transform 1100ms var(--ease);
-}
-
-[data-reveal].is-visible {
-	opacity: 1;
-	transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	[data-reveal] {
-		opacity: 1;
-		transform: none;
-		transition: none;
-	}
-}
-
-[data-glow] {
+/*
+ * Deliberately bare. Both `content-visibility: auto` and `contain: layout` cut
+ * real work here, and both were measured to change what is drawn:
+ * content-visibility sizes offscreen sections from an estimate, which moves
+ * every scroll position; containment opens a stacking context, which becomes
+ * the backdrop root and stops the pane sampling the drawing behind it.
+ */
+.section {
 	position: relative;
-	isolation: isolate;
-	overflow: hidden;
+	padding-block: var(--section-pad);
+	/* Under review: this measurably helps scrolling, and it measurably changes
+	   what the pane samples. See the note above. */
+	contain: layout style;
 }
 
-[data-glow-layer] {
+.section::before {
+	content: "";
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline: var(--gutter);
+	height: 1px;
+	background: var(--rule);
+}
+
+/*
+ * Tracing paper. The drawing runs under the whole document, and thin text set
+ * straight onto it competes with linework of its own weight. So the reading
+ * column gets a translucent sheet laid over the plate — which is what a
+ * draughtsman does to write over a drawing.
+ *
+ * The refraction half of the current glass fashion is deliberately absent: SVG
+ * displacement as backdrop-filter is Chromium-only and its own author calls it
+ * experimental, so on Safari it would simply not exist. Blur and saturation are
+ * production-grade everywhere, and the mask dissolves the edges so this reads
+ * as a laid sheet rather than a card.
+ */
+/* Left of centre on purpose. The docked contact button carries weight on the
+   right for the whole document, so an exactly centred column reads right-heavy
+   against it. The offset collapses to nothing on a phone. */
+.column {
+	position: relative;
+	min-width: 0;
+	max-width: 44rem;
+	margin-inline: var(--bias) auto;
+}
+
+/*
+ * A pane of tinted glass over the plate. Blur sits in the 12–24px band where
+ * the material still reads as seen-through rather than as a flat tint, and the
+ * saturation lift keeps the drawing's colour from washing out behind it. The
+ * fine bright border is what sells the edge — without it the pane reads flat.
+ */
+.column::before {
+	content: "";
+	position: absolute;
+	inset-block: -1.5rem;
+	/* Never wider than the gutter it sits in, or the pane pushes off a phone. */
+	inset-inline: calc(-1 * min(1.75rem, var(--gutter) * 0.7));
+	z-index: -1;
+	border-radius: var(--fillet);
+	pointer-events: none;
+	background: color-mix(in oklab, var(--paper) 52%, transparent);
+	backdrop-filter: blur(16px) saturate(1.8);
+	-webkit-backdrop-filter: blur(16px) saturate(1.8);
+	border: 1px solid color-mix(in oklab, #ffffff 58%, transparent);
+	box-shadow:
+		inset 0 1px 0 color-mix(in oklab, #ffffff 62%, transparent),
+		inset 0 -1px 0 color-mix(in oklab, var(--ink) 7%, transparent);
+}
+
+/* Registration ticks on the glass, held in the margin so they never cross the
+   text. Same hand as the callouts on the plate. */
+.column::after {
+	content: "";
+	position: absolute;
+	inset-block: -1rem;
+	inset-inline: calc(-1 * min(1.25rem, var(--gutter) * 0.5));
+	z-index: -1;
+	pointer-events: none;
+	background-image:
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool)),
+		linear-gradient(var(--accent-cool), var(--accent-cool));
+	background-repeat: no-repeat;
+	background-size:
+		16px 1px,
+		1px 16px,
+		16px 1px,
+		1px 16px,
+		16px 1px,
+		1px 16px,
+		16px 1px,
+		1px 16px;
+	background-position:
+		left top,
+		left top,
+		right top,
+		right top,
+		left bottom,
+		left bottom,
+		right bottom,
+		right bottom;
+	opacity: 0.55;
+}
+
+/* The tooth of the stock. It bites into the paper itself, under the grid and
+   under the ink — the way a real sheet works. */
+.grain {
 	position: absolute;
 	inset: 0;
-	z-index: -1;
-	opacity: 0;
+	z-index: 0;
 	pointer-events: none;
-	transition: opacity 620ms var(--ease);
-	background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--paper-alt) 0%, rgba(224, 210, 198, 0) 72%);
+	background-image: var(--grain);
+	background-size: 180px 180px;
+	mix-blend-mode: multiply;
+	opacity: 0.7;
 }
 
-[data-glow-layer].glow-tight {
-	background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), var(--paper-alt) 0%, rgba(224, 210, 198, 0) 72%);
+@supports not (backdrop-filter: blur(1px)) {
+	.column::before {
+		background: color-mix(in oklab, var(--paper) 86%, transparent);
+	}
+}
+
+/* ── Type roles ── */
+
+.h2 {
+	margin: 0;
+	font-family: var(--display);
+	font-size: clamp(1.75rem, 4.4vw, 2.9rem);
+	font-weight: 400;
+	line-height: 1.1;
+	letter-spacing: -0.015em;
+	text-wrap: balance;
+}
+
+.lead {
+	margin: 1.25rem 0 0;
+	font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+	line-height: 1.6;
+	max-width: 54ch;
+}
+
+.body-text {
+	margin: 0.6rem 0 0;
+	font-size: 1.0625rem;
+	line-height: 1.7;
+	color: var(--ink-soft);
+	max-width: 62ch;
+}
+
+.h3 {
+	margin: 0;
+	font-family: var(--display);
+	font-size: clamp(1.1875rem, 2.2vw, 1.4375rem);
+	font-weight: 400;
+	line-height: 1.25;
+	letter-spacing: -0.005em;
+}
+
+/* The technical face is for data and labels. Prose never gets it, however small. */
+.micro {
+	font-size: 0.8125rem;
+	line-height: 1.65;
+	color: var(--ink-soft);
+}
+
+/* Every route to the contact section is a descent, so let it be travelled. */
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-delay: 0ms !important;
+		transition-duration: 0.01ms !important;
+	}
 }

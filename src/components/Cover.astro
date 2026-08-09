@@ -1,0 +1,580 @@
+---
+/*
+ * The cover is a drawing sheet. The plate is not ornament laid behind the type:
+ * it is an orthographic projection that fills the sheet the way a photograph
+ * would, and the title is set into the space it leaves on the left. Everything
+ * is vector, so the density costs almost nothing.
+ *
+ * The identity sits at the head like a letterhead. An earlier pass ran it as a
+ * row of four bordered cells along the foot, which is the shape of a stats bar
+ * whatever the fields say — the form read as a template even though the content
+ * did not.
+ */
+---
+
+<header class="cover">
+	<div class="grid" aria-hidden="true"></div>
+
+	<svg
+		class="plate"
+		viewBox="0 0 1200 900"
+		preserveAspectRatio="xMidYMid slice"
+		aria-hidden="true"
+		focusable="false"
+	>
+		<defs>
+			<pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+				<line x1="0" y1="0" x2="0" y2="7" class="s-ghost"></line>
+			</pattern>
+			<pattern id="hatch-dense" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+				<line x1="0" y1="0" x2="0" y2="4" class="s-faint"></line>
+			</pattern>
+		</defs>
+
+		<!--
+			Struck in the order a draughtsman works: construction, then outline,
+			then features, then axes, then the section, then the dimensions last.
+			Every stroked element carries pathLength="1" so the draw-on animation
+			needs no measurement.
+		-->
+
+		<!-- Projection lines tying the plan to the elevation below -->
+		<g class="s-ghost draw" style="--at: 0ms">
+			<path pathLength="1" d="M500 470 V600"></path>
+			<path pathLength="1" d="M640 398 V600"></path>
+			<path pathLength="1" d="M820 470 V600"></path>
+			<path pathLength="1" d="M890 470 V600"></path>
+			<path pathLength="1" d="M960 470 V600"></path>
+			<path pathLength="1" d="M1100 470 V600"></path>
+			<path pathLength="1" d="M1160 470 V600"></path>
+		</g>
+
+		<!-- PLAN VIEW: a plate, chamfered at one corner, drilled asymmetrically -->
+		<g class="s-line draw" style="--at: 380ms">
+			<path pathLength="1" d="M500 150 L1080 150 L1160 230 L1160 470 L500 470 Z"></path>
+		</g>
+
+		<!-- Bore with counterbore, a slot, and three drillings -->
+		<g class="s-line draw" style="--at: 900ms">
+			<circle pathLength="1" cx="640" cy="310" r="62"></circle>
+			<path pathLength="1" d="M820 250 h70 a26 26 0 0 1 0 52 h-70 a26 26 0 0 1 0 -52 z"></path>
+			<circle pathLength="1" cx="960" cy="220" r="24"></circle>
+			<circle pathLength="1" cx="960" cy="400" r="24"></circle>
+			<circle pathLength="1" cx="1100" cy="310" r="32"></circle>
+		</g>
+		<g class="s-faint draw" style="--at: 1100ms">
+			<circle pathLength="1" cx="640" cy="310" r="88"></circle>
+		</g>
+
+		<!-- Centre lines: chain-dash, so they arrive rather than draw -->
+		<g class="s-axis fade" style="--at: 1400ms">
+			<path d="M540 310 H1160M640 210 V410"></path>
+			<path d="M820 276 H910M820 230 V322M890 230 V322"></path>
+			<path d="M960 186 V254M926 220 H994M960 366 V434M926 400 H994"></path>
+			<path d="M1100 264 V356"></path>
+		</g>
+
+		<!-- ELEVATION, in section -->
+		<g class="s-line draw" style="--at: 1650ms">
+			<path pathLength="1" d="M500 600 H1160 V680 H500 Z"></path>
+		</g>
+		<g class="fade" style="--at: 2050ms">
+			<rect x="500" y="600" width="660" height="80" fill="url(#hatch)"></rect>
+		</g>
+		<g class="s-hidden fade" style="--at: 2200ms">
+			<path d="M1080 150 L1080 470"></path>
+			<path d="M578 600 V680M702 600 V680M794 600 V680M846 600 V680M936 600 V680M984 600 V680M1068 600 V680M1132 600 V680"></path>
+		</g>
+
+		<!-- Dimension chain, closed by an overall cote — always drawn last -->
+		<g class="s-signal draw" style="--at: 2400ms">
+			<path pathLength="1" class="s-ext" d="M500 690 V760"></path>
+			<path pathLength="1" class="s-ext" d="M640 690 V760"></path>
+			<path pathLength="1" class="s-ext" d="M960 690 V760"></path>
+			<path pathLength="1" class="s-ext" d="M1160 690 V760"></path>
+			<path pathLength="1" d="M500 736 H640"></path>
+			<path pathLength="1" d="M640 736 H960"></path>
+			<path pathLength="1" d="M960 736 H1160"></path>
+		</g>
+		<g class="s-signal fade" style="--at: 2900ms">
+			<path d="M512 730 L500 736 L512 742M628 730 L640 736 L628 742"></path>
+			<path d="M652 730 L640 736 L652 742M948 730 L960 736 L948 742"></path>
+			<path d="M972 730 L960 736 L972 742M1148 730 L1160 736 L1148 742"></path>
+		</g>
+		<g class="s-signal draw" style="--at: 3000ms">
+			<path pathLength="1" class="s-ext" d="M500 736 V790"></path>
+			<path pathLength="1" class="s-ext" d="M1160 736 V790"></path>
+			<path pathLength="1" d="M500 776 H1160"></path>
+		</g>
+
+		<!-- Detail callout, leadered off the sheet -->
+		<g class="fade" style="--at: 3200ms">
+			<circle class="s-detail" cx="1100" cy="310" r="66"></circle>
+			<path class="s-callout" d="M1147 263 L1190 205"></path>
+			<circle class="s-callout" cx="960" cy="220" r="40"></circle>
+			<path class="s-callout" d="M988 192 L1030 150"></path>
+		</g>
+
+		<!-- Sheet zone references down the right border -->
+		<g class="s-faint fade" style="--at: 3350ms">
+			<path d="M1176 60 H1200M1176 260 H1200M1176 460 H1200M1176 660 H1200M1176 860 H1200"></path>
+		</g>
+	</svg>
+
+	<div class="cover-inner">
+		<span class="mark mark-tl" aria-hidden="true"></span>
+		<span class="mark mark-tr" aria-hidden="true"></span>
+		<span class="mark mark-bl" aria-hidden="true"></span>
+		<span class="mark mark-br" aria-hidden="true"></span>
+
+		<div class="head">
+			<span class="head-name">Nicolas Pruneau</span>
+			<span class="head-role">Étudiant ingénieur civil en informatique</span>
+		</div>
+
+		<div class="block">
+			<h1 class="title">
+				<span class="line">Un site, un outil interne, un prototype.</span>
+				<span class="line">
+					Je conçois <span class="key">ce qui n'existe pas encore</span>.
+				</span>
+			</h1>
+
+			<div class="measure" data-measure aria-hidden="true">
+				<span class="measure-tick"></span>
+				<span class="measure-rule"></span>
+				<span class="measure-value" data-measure-value></span>
+				<span class="measure-rule"></span>
+				<span class="measure-tick"></span>
+			</div>
+
+			<p class="sub">
+				Étudiant ingénieur civil à la Faculté Polytechnique de Mons, orientation informatique et
+				intelligence artificielle. Je conçois des sites vitrines et des outils sur mesure pour les
+				indépendants, commerces, ASBL et jeunes entreprises. Région de Mons et Binche, ou à
+				distance.
+			</p>
+
+			<a href="#contact" class="cta" data-origin-fill>
+				<span class="cta-label">Me contacter</span>
+				<svg class="cta-arrow" viewBox="0 0 12 20" aria-hidden="true" focusable="false">
+					<path d="M6 0V18M1 13L6 18L11 13"></path>
+				</svg>
+			</a>
+		</div>
+
+	</div>
+</header>
+
+<style>
+	.cover {
+		position: relative;
+		isolation: isolate;
+		background: var(--stone);
+		color: var(--chalk);
+		overflow: hidden;
+	}
+
+	/* Millimetre paper, drawn in gradients so it costs no markup */
+	.grid {
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		background-image:
+			repeating-linear-gradient(to right, var(--line-ghost) 0 1px, transparent 1px 40px),
+			repeating-linear-gradient(to bottom, var(--line-ghost) 0 1px, transparent 1px 40px),
+			repeating-linear-gradient(to right, var(--line-faint) 0 1px, transparent 1px 200px),
+			repeating-linear-gradient(to bottom, var(--line-faint) 0 1px, transparent 1px 200px);
+	}
+
+	.plate {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		/* On a phone the type spans the sheet, so the drawing steps back
+		   everywhere rather than in one band. */
+		opacity: 0.55;
+	}
+
+	/* On a wide sheet the construction keeps clear of the title column, the way
+	   a real plate leaves its left margin free. This mask is for legibility,
+	   not decoration. */
+	@media (min-width: 56em) {
+		.plate,
+		.grid {
+			opacity: 1;
+			mask-image: linear-gradient(
+				to right,
+				rgba(0, 0, 0, 0.16) 0%,
+				rgba(0, 0, 0, 0.3) 26%,
+				#000 58%
+			);
+		}
+	}
+
+	.plate :global(.s-line) {
+		stroke: var(--line);
+		stroke-width: 1.25;
+		stroke-opacity: 0.62;
+	}
+
+	.plate :global(.s-faint) {
+		stroke: var(--line);
+		stroke-width: 1;
+		stroke-opacity: 0.34;
+	}
+
+	.plate :global(.s-ghost) {
+		stroke: var(--line);
+		stroke-width: 1;
+		stroke-opacity: 0.16;
+	}
+
+	.plate :global(.s-signal) {
+		stroke: var(--signal);
+		stroke-width: 1.25;
+		stroke-opacity: 0.9;
+	}
+
+	/* Centre lines are chain-dash and overrun the feature they axis, the way
+	   they do on a real plate. */
+	.plate :global(.s-axis) {
+		stroke: var(--line);
+		stroke-width: 1;
+		stroke-opacity: 0.4;
+		stroke-dasharray: 26 6 5 6;
+	}
+
+	/* Edges the eye cannot see through the material */
+	.plate :global(.s-hidden) {
+		stroke: var(--line);
+		stroke-width: 1;
+		stroke-opacity: 0.3;
+		stroke-dasharray: 9 7;
+	}
+
+	/* Callouts answer to a different colour than dimensions, because they say a
+	   different thing: look closer, rather than this is how big it is. */
+	.plate :global(.s-detail) {
+		stroke: var(--signal-cool);
+		stroke-width: 1.25;
+		stroke-opacity: 0.9;
+		stroke-dasharray: 8 6;
+	}
+
+	.plate :global(.s-callout) {
+		stroke: var(--signal-cool);
+		stroke-width: 1.25;
+		stroke-opacity: 0.9;
+	}
+
+	/* Extension lines are thinner than the dimension line they carry */
+	.plate :global(.s-ext) {
+		stroke-opacity: 0.45;
+	}
+
+	/* pathLength="1" normalises every stroke, so one keyframe draws them all. */
+	.plate :global(.draw) > * {
+		stroke-dasharray: 1;
+	}
+
+	.cover-inner {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		min-height: 100svh;
+		max-width: var(--sheet-wide);
+		margin-inline: auto;
+		padding: clamp(2.75rem, 6vw, 4.5rem) var(--gutter) clamp(3.5rem, 6vw, 5rem);
+	}
+
+	/* ── Trim marks ── */
+
+	.mark {
+		position: absolute;
+		width: 22px;
+		height: 22px;
+	}
+
+	.mark::before,
+	.mark::after {
+		content: "";
+		position: absolute;
+		background: var(--signal);
+	}
+
+	.mark::before {
+		inset-block: 0;
+		left: 50%;
+		width: 1px;
+	}
+
+	.mark::after {
+		inset-inline: 0;
+		top: 50%;
+		height: 1px;
+	}
+
+	.mark-tl {
+		top: 1.25rem;
+		left: calc(var(--gutter) - 11px);
+	}
+	.mark-tr {
+		top: 1.25rem;
+		right: calc(var(--gutter) - 11px);
+	}
+	.mark-bl {
+		bottom: 1.25rem;
+		left: calc(var(--gutter) - 11px);
+	}
+	.mark-br {
+		bottom: 1.25rem;
+		right: calc(var(--gutter) - 11px);
+	}
+
+	/* A letterhead, not a block: two lines of type and no box at all. */
+	.head {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.head-name {
+		font-family: var(--mono);
+		font-size: 0.8125rem;
+		letter-spacing: 0.1em;
+		color: var(--chalk);
+	}
+
+	.head-role {
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: var(--stone-soft);
+	}
+
+	/* ── Type set into the drawing ── */
+
+	.block {
+		margin-block: auto;
+		max-width: min(100%, 40rem);
+	}
+
+	.title {
+		margin: 0;
+		font-family: var(--display);
+		font-size: clamp(2.05rem, 6.6vw, 4.5rem);
+		font-weight: 400;
+		line-height: 1.06;
+		letter-spacing: -0.02em;
+		color: var(--stone-title);
+	}
+
+	.line {
+		display: block;
+	}
+
+	.key {
+		color: var(--chalk);
+	}
+
+	/* A real dimension: it measures the title block it sits under, in the pixels
+	   the visitor's own screen is actually using. The scale really is 1:1. */
+	.measure {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-top: clamp(1rem, 2vw, 1.5rem);
+		color: var(--signal);
+	}
+
+	.measure-tick {
+		flex: 0 0 auto;
+		width: 1px;
+		height: 11px;
+		background: currentColor;
+	}
+
+	.measure-rule {
+		flex: 1 1 auto;
+		height: 1px;
+		background: currentColor;
+	}
+
+	.measure-value {
+		flex: 0 0 auto;
+		font-family: var(--mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.sub {
+		margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+		max-width: 46ch;
+		font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
+		line-height: 1.65;
+		color: var(--stone-soft);
+	}
+
+	/*
+	 * The fill grows from wherever the pointer crossed the edge — the origin is
+	 * set by script, the motion is CSS. Falls back to a plain colour swap where
+	 * the custom properties never arrive.
+	 */
+	.cta {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.85rem;
+		margin-top: clamp(1.75rem, 3vw, 2.5rem);
+		padding: 0.95rem 1.5rem;
+		border-radius: var(--fillet);
+		/* The outline survives the fill, so the control keeps its shape once the
+		   ground beneath it darkens — and it covers the seam where the disc meets
+		   the fillet. */
+		border: 1px solid var(--signal);
+		background: var(--signal);
+		color: var(--ink);
+		font-family: var(--sans);
+		font-size: 0.9375rem;
+		text-decoration: none;
+		transition: color 280ms var(--ease);
+	}
+
+	/* The fill grows from wherever the pointer crossed the edge. */
+	.cta::before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: var(--oy, 50%);
+		left: var(--ox, 50%);
+		width: calc(var(--or, 140px) * 2);
+		height: calc(var(--or, 140px) * 2);
+		margin: calc(var(--or, 140px) * -1);
+		border-radius: 50%;
+		background: var(--stone-deep);
+		transform: scale(0);
+		transition: transform 460ms var(--ease-plot);
+	}
+
+	.cta:hover,
+	.cta:focus-visible {
+		color: var(--chalk);
+	}
+
+	.cta:hover::before,
+	.cta:focus-visible::before {
+		transform: scale(1);
+	}
+
+	.cta:active {
+		transform: scale(0.985);
+	}
+
+	.cta-label,
+	.cta-arrow {
+		position: relative;
+	}
+
+	.cta-arrow {
+		width: 12px;
+		height: 20px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 520ms var(--ease-plot);
+	}
+
+	.cta:hover .cta-arrow,
+	.cta:focus-visible .cta-arrow {
+		transform: translateY(3px);
+	}
+
+	/*
+	 * One authored moment: the sheet is plotted. The construction is struck
+	 * first, then the title is swept in over it.
+	 */
+	@media (prefers-reduced-motion: no-preference) {
+		.grid {
+			animation: expose 900ms var(--ease) backwards;
+		}
+
+		/* The sheet is plotted: each group waits its turn via --at. */
+		.plate :global(.draw) > * {
+			animation: draw 900ms var(--ease-plot) var(--at, 0ms) backwards;
+		}
+
+		.plate :global(.fade) {
+			animation: settle 520ms var(--ease) var(--at, 0ms) backwards;
+		}
+
+		.measure {
+			animation: settle 420ms var(--ease) 3400ms backwards;
+		}
+
+		.sub,
+		.head,
+		.cta,
+		.mark {
+			animation: settle 420ms var(--ease) backwards;
+		}
+
+		.line {
+			animation: plot 560ms var(--ease-plot) backwards;
+		}
+
+		.line:first-child {
+			animation-delay: 260ms;
+		}
+		.line:last-child {
+			animation-delay: 400ms;
+		}
+		.sub {
+			animation-delay: 640ms;
+		}
+		.cta {
+			animation-delay: 720ms;
+		}
+		.head {
+			animation-delay: 0ms;
+		}
+
+		.mark {
+			animation-delay: 840ms;
+		}
+	}
+
+	@keyframes plot {
+		from {
+			clip-path: inset(0 100% 0 0);
+		}
+	}
+
+	@keyframes settle {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes expose {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes draw {
+		from {
+			stroke-dashoffset: 1;
+		}
+	}
+</style>

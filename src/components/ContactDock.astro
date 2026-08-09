@@ -1,0 +1,101 @@
+---
+/*
+ * Once the cover is behind you, the way to reach him is off screen for the
+ * whole middle of the document. This keeps it one tap away, and takes itself
+ * out of the way again as soon as the contact section arrives.
+ */
+---
+
+<a href="#contact" class="dock" data-dock data-origin-fill hidden>
+	<span class="dock-label">Me contacter</span>
+	<svg class="dock-arrow" viewBox="0 0 12 20" aria-hidden="true" focusable="false">
+		<path d="M6 0V18M1 13L6 18L11 13"></path>
+	</svg>
+</a>
+
+<style>
+	.dock {
+		position: fixed;
+		z-index: 30;
+		right: var(--gutter);
+		bottom: clamp(1rem, 3vw, 2rem);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.85rem 1.25rem;
+		border-radius: var(--fillet);
+		border: 1px solid var(--signal);
+		background: var(--signal);
+		color: var(--ink);
+		font-family: var(--sans);
+		font-size: 0.9375rem;
+		text-decoration: none;
+		overflow: hidden;
+		isolation: isolate;
+		transition:
+			color 300ms var(--ease),
+			opacity 420ms var(--ease),
+			transform 420ms var(--ease-plot);
+	}
+
+	.dock[hidden] {
+		display: none;
+	}
+
+	.dock[data-state="out"] {
+		opacity: 0;
+		transform: translateY(14px);
+		pointer-events: none;
+	}
+
+	/* The fill grows from wherever the pointer crossed the edge. */
+	.dock::before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: var(--oy, 50%);
+		left: var(--ox, 50%);
+		width: calc(var(--or, 140px) * 2);
+		height: calc(var(--or, 140px) * 2);
+		margin: calc(var(--or, 140px) * -1);
+		border-radius: 50%;
+		background: var(--stone-deep);
+		transform: scale(0);
+		transition: transform 460ms var(--ease-plot);
+	}
+
+	.dock:hover,
+	.dock:focus-visible {
+		color: var(--chalk);
+	}
+
+	.dock:hover::before,
+	.dock:focus-visible::before {
+		transform: scale(1);
+	}
+
+	.dock-arrow {
+		width: 12px;
+		height: 20px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 520ms var(--ease-plot);
+	}
+
+	.dock:hover .dock-arrow,
+	.dock:focus-visible .dock-arrow {
+		transform: translateY(3px);
+	}
+
+	@media (max-width: 34em) {
+		.dock {
+			right: auto;
+			left: var(--gutter);
+			width: calc(100% - (var(--gutter) * 2));
+			justify-content: center;
+		}
+	}
+</style>

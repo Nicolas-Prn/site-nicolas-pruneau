@@ -1,0 +1,10 @@
+# Copy to `.dev.vars` (gitignored) for local runs of `wrangler dev`.
+# In production the same value is set with `npx wrangler secret put CONTACT_TO`.
+#
+# Where contact messages land. Cloudflare Email Sending only delivers to a
+# VERIFIED destination address — list yours with:
+#   npx wrangler email routing addresses list
+#
+# It is kept out of the tracked config because that address is a personal
+# inbox, and this repository is public.
+CONTACT_TO=you@example.com

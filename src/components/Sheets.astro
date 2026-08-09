@@ -1,0 +1,284 @@
+---
+/*
+ * The drawing set that runs behind the document. It is fixed, so it never
+ * scrolls: it advances one step at a time, the way paper advances through a
+ * plotter, and the sheet that arrives is drawn rather than faded in. The same
+ * happens on the way back up.
+ *
+ * Each sheet is a different view of the same imagined object, in the same
+ * conventions as the cover.
+ */
+---
+
+<div class="sheets" data-sheets aria-hidden="true">
+	<div class="sheets-grid"></div>
+
+	<div class="sheets-stage" data-sheets-stage>
+		<!-- i · Three ways in: three bodies, drawn as separate parts -->
+		<svg class="sheet" data-sheet="1" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+			<g class="d-line draw" style="--at: 0ms">
+				<path pathLength="1" d="M700 120 H960 V300 H700 Z"></path>
+				<path pathLength="1" d="M700 340 H1020 V520 H700 Z"></path>
+				<path pathLength="1" d="M700 560 H900 V740 H700 Z"></path>
+			</g>
+			<g class="d-faint draw" style="--at: 320ms">
+				<circle pathLength="1" cx="760" cy="210" r="34"></circle>
+				<circle pathLength="1" cx="760" cy="430" r="34"></circle>
+				<circle pathLength="1" cx="760" cy="650" r="34"></circle>
+			</g>
+			<g class="d-axis fade" style="--at: 620ms">
+				<path d="M700 210 H1060M700 430 H1060M700 650 H1060"></path>
+				<path d="M760 170 V250M760 390 V470M760 610 V690"></path>
+			</g>
+			<g class="d-signal draw" style="--at: 820ms">
+				<path pathLength="1" d="M1080 120 V300"></path>
+				<path pathLength="1" d="M1080 340 V520"></path>
+				<path pathLength="1" d="M1080 560 V740"></path>
+			</g>
+			<g class="d-cool fade" style="--at: 1100ms">
+				<path d="M1000 340 L1120 250"></path>
+				<circle class="d-detail" cx="960" cy="380" r="46"></circle>
+			</g>
+		</svg>
+
+		<!-- ii · A sequence: a stepped profile, stationed and dimensioned -->
+		<svg class="sheet" data-sheet="2" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+			<g class="d-line draw" style="--at: 0ms">
+				<path pathLength="1" d="M660 700 H780 V580 H900 V460 H1020 V340 H1140"></path>
+			</g>
+			<g class="d-faint draw" style="--at: 420ms">
+				<path pathLength="1" d="M660 700 V740M780 580 V740M900 460 V740M1020 340 V740"></path>
+			</g>
+			<g class="d-signal draw" style="--at: 700ms">
+				<path pathLength="1" d="M660 760 H780M780 760 H900M900 760 H1020M1020 760 H1140"></path>
+			</g>
+			<g class="d-axis fade" style="--at: 1000ms">
+				<path d="M620 580 H1180M620 460 H1180M620 340 H1180"></path>
+			</g>
+			<g class="d-cool fade" style="--at: 1200ms">
+				<circle class="d-detail" cx="1020" cy="340" r="52"></circle>
+				<path d="M1056 304 L1120 240"></path>
+			</g>
+		</svg>
+
+		<!-- iii · A graduated scale: three registered stops -->
+		<svg class="sheet" data-sheet="3" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+			<g class="d-line draw" style="--at: 0ms">
+				<path pathLength="1" d="M700 200 H1120"></path>
+				<path pathLength="1" d="M700 400 H1120"></path>
+				<path pathLength="1" d="M700 600 H1120"></path>
+			</g>
+			<g class="d-faint draw" style="--at: 340ms">
+				<path pathLength="1" d="M700 170 V230M840 170 V230M980 170 V230M1120 170 V230"></path>
+				<path pathLength="1" d="M700 370 V430M840 370 V430M980 370 V430M1120 370 V430"></path>
+				<path pathLength="1" d="M700 570 V630M840 570 V630M980 570 V630M1120 570 V630"></path>
+			</g>
+			<g class="d-signal draw" style="--at: 700ms">
+				<path pathLength="1" d="M700 260 H840"></path>
+				<path pathLength="1" d="M700 460 H980"></path>
+				<path pathLength="1" d="M700 660 H1120"></path>
+			</g>
+			<g class="d-axis fade" style="--at: 1000ms">
+				<path d="M640 200 H1180M640 400 H1180M640 600 H1180"></path>
+			</g>
+		</svg>
+
+		<!-- iv · A section through the material, where the questions are cut open -->
+		<svg class="sheet" data-sheet="4" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+			<defs>
+				<pattern id="sheet-hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+					<line x1="0" y1="0" x2="0" y2="8" class="d-ghost"></line>
+				</pattern>
+			</defs>
+			<g class="d-line draw" style="--at: 0ms">
+				<path pathLength="1" d="M680 180 H1120 V620 H680 Z"></path>
+			</g>
+			<g class="fade" style="--at: 500ms">
+				<rect x="680" y="180" width="440" height="140" fill="url(#sheet-hatch)"></rect>
+				<rect x="680" y="440" width="440" height="180" fill="url(#sheet-hatch)"></rect>
+			</g>
+			<g class="d-hidden fade" style="--at: 760ms">
+				<path d="M680 320 H1120M680 440 H1120"></path>
+			</g>
+			<g class="d-signal draw" style="--at: 900ms">
+				<path pathLength="1" d="M1160 180 V620"></path>
+				<path pathLength="1" d="M1140 180 H1180M1140 620 H1180"></path>
+			</g>
+			<g class="d-cool fade" style="--at: 1180ms">
+				<path d="M620 320 H700M620 440 H700"></path>
+			</g>
+		</svg>
+
+		<!-- v · Everything converges on one point -->
+		<svg class="sheet" data-sheet="5" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+			<g class="d-faint draw" style="--at: 0ms">
+				<path pathLength="1" d="M660 140 L980 400"></path>
+				<path pathLength="1" d="M660 400 L980 400"></path>
+				<path pathLength="1" d="M660 660 L980 400"></path>
+				<path pathLength="1" d="M1180 180 L980 400"></path>
+				<path pathLength="1" d="M1180 620 L980 400"></path>
+			</g>
+			<g class="d-line draw" style="--at: 480ms">
+				<circle pathLength="1" cx="980" cy="400" r="90"></circle>
+			</g>
+			<g class="d-axis fade" style="--at: 800ms">
+				<path d="M860 400 H1100M980 280 V520"></path>
+			</g>
+			<g class="d-cool fade" style="--at: 1000ms">
+				<circle class="d-detail" cx="980" cy="400" r="140"></circle>
+			</g>
+			<g class="d-signal draw" style="--at: 1200ms">
+				<path pathLength="1" d="M980 560 V680"></path>
+				<path pathLength="1" d="M968 668 L980 680 L992 668"></path>
+			</g>
+		</svg>
+	</div>
+
+	<div class="grain"></div>
+</div>
+
+<style>
+	.sheets {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		overflow: hidden;
+		pointer-events: none;
+		/* The stock the whole set is printed on, so the grain has something to
+		   bite into. */
+		background: var(--paper);
+	}
+
+	.sheets-grid {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		background-image:
+			repeating-linear-gradient(to right, var(--grid-ghost) 0 1px, transparent 1px 40px),
+			repeating-linear-gradient(to bottom, var(--grid-ghost) 0 1px, transparent 1px 40px),
+			repeating-linear-gradient(to right, var(--grid-faint) 0 1px, transparent 1px 200px),
+			repeating-linear-gradient(to bottom, var(--grid-faint) 0 1px, transparent 1px 200px);
+	}
+
+	/*
+	 * The advance. One decisive step per sheet change rather than a scroll-tied
+	 * slide, so the movement reads as the plotter feeding paper.
+	 */
+	.sheets-stage {
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		transform: translateY(calc(var(--step, 0) * -5vh));
+		transition: transform 680ms var(--ease-plot);
+	}
+
+	/* No mask here: the tracing sheet over the reading column is what protects
+	   the text now, so the drawing is free to run the full width beneath it. */
+
+	.sheet {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			opacity 360ms var(--ease),
+			visibility 0s linear 360ms;
+	}
+
+	.sheet[data-active] {
+		opacity: 1;
+		visibility: visible;
+		transition:
+			opacity 360ms var(--ease),
+			visibility 0s;
+	}
+
+	/* ── Line grammar, matching the cover ── */
+
+	.sheet :global(.d-line) {
+		stroke: var(--draw-ink);
+		stroke-width: 1.25;
+		stroke-opacity: 0.5;
+	}
+
+	.sheet :global(.d-faint) {
+		stroke: var(--draw-ink);
+		stroke-width: 1;
+		stroke-opacity: 0.3;
+	}
+
+	.sheet :global(.d-ghost) {
+		stroke: var(--draw-ink);
+		stroke-width: 1;
+		stroke-opacity: 0.2;
+	}
+
+	.sheet :global(.d-axis) {
+		stroke: var(--draw-ink);
+		stroke-width: 1;
+		stroke-opacity: 0.26;
+		stroke-dasharray: 26 6 5 6;
+	}
+
+	.sheet :global(.d-hidden) {
+		stroke: var(--draw-ink);
+		stroke-width: 1;
+		stroke-opacity: 0.24;
+		stroke-dasharray: 9 7;
+	}
+
+	.sheet :global(.d-signal) {
+		stroke: var(--accent);
+		stroke-width: 1.25;
+		stroke-opacity: 0.5;
+	}
+
+	.sheet :global(.d-cool) {
+		stroke: var(--accent-cool);
+		stroke-width: 1.25;
+		stroke-opacity: 0.5;
+	}
+
+	.sheet :global(.d-detail) {
+		stroke-dasharray: 8 6;
+	}
+
+	.sheet :global(.draw) > * {
+		stroke-dasharray: 1;
+	}
+
+	/* The lines are struck only when their sheet is the one on the machine. */
+	@media (prefers-reduced-motion: no-preference) {
+		.sheet[data-active] :global(.draw) > * {
+			animation: sheet-draw 820ms var(--ease-plot) var(--at, 0ms) backwards;
+		}
+
+		.sheet[data-active] :global(.fade) {
+			animation: sheet-fade 460ms var(--ease) var(--at, 0ms) backwards;
+		}
+	}
+
+	@keyframes sheet-draw {
+		from {
+			stroke-dashoffset: 1;
+		}
+	}
+
+	@keyframes sheet-fade {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@media (max-width: 46em) {
+		/* On a phone the type owns the sheet, so the drawing steps well back. */
+		.sheets-stage {
+			opacity: 0.55;
+		}
+	}
+</style>

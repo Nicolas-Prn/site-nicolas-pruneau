@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import OpeningImage from "../components/OpeningImage.astro";
+import Cover from "../components/Cover.astro";
+import Sheets from "../components/Sheets.astro";
+import ContactDock from "../components/ContactDock.astro";
 import Services from "../components/Services.astro";
-import TechMarquee from "../components/TechMarquee.astro";
 import Process from "../components/Process.astro";
 import Quote from "../components/Quote.astro";
 import Pricing from "../components/Pricing.astro";
@@ -14,15 +13,16 @@ import Footer from "../components/Footer.astro";
 ---
 
 <Layout>
-	<Header />
-	<Hero />
-	<OpeningImage />
-	<Services />
-	<TechMarquee />
-	<Process />
-	<Quote />
-	<Pricing />
-	<Faq />
-	<Contact />
+	<Sheets />
+	<Cover />
+	<main>
+		<Services />
+		<Process />
+		<Quote />
+		<Pricing />
+		<Faq />
+		<Contact />
+	</main>
 	<Footer />
+	<ContactDock />
 </Layout>

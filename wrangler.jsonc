@@ -1,7 +1,30 @@
 {
 	"name": "site-nicolas-pruneau",
 	"compatibility_date": "2026-08-08",
+	"main": "./worker/index.js",
 	"assets": {
-		"directory": "./dist"
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},
+	// Cloudflare Email Sending. `remote: true` proxies local runs to the real
+	// service, since there is nothing to emulate offline.
+	"send_email": [
+		{
+			"name": "EMAIL",
+			"remote": true
+		}
+	],
+	// The sender is only an identity — no mailbox sits behind it, and replies go
+	// to the visitor via reply_to — so it is safe in a public repository.
+	//
+	// CONTACT_TO is NOT here on purpose. Cloudflare only delivers to verified
+	// destination addresses, which makes it a personal inbox, and a personal
+	// address in a public repository is an invitation to spam. Set it with
+	// `npx wrangler secret put CONTACT_TO`, and in `.dev.vars` for local runs.
+	"vars": {
+		"CONTACT_FROM": "site@nicolas-pruneau.com"
+	},
+	"observability": {
+		"enabled": true
 	}
 }
