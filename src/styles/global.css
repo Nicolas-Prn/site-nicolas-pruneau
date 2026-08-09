@@ -56,6 +56,17 @@
 
 	--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.62'/%3E%3C/svg%3E");
 
+	/* Tracing paper is smoother than drawing stock, so its tooth is finer. */
+	--grain-fine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23f)' opacity='0.55'/%3E%3C/svg%3E");
+
+	/* And it is never perfectly even: a slow mottle across the sheet. */
+	--mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23m)' opacity='0.5'/%3E%3C/svg%3E");
+
+	/* A laid sheet has straight edges that feather, not an oval blob. */
+	--sheet-mask:
+		linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%),
+		linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+
 	--gutter: clamp(20px, 5.5vw, 56px);
 	--sheet: 1180px;
 	--rail: clamp(7.5rem, 13vw, 12rem);
@@ -153,18 +164,41 @@ img {
 	max-width: 44rem;
 }
 
-.column::before {
+.column::before,
+.column::after {
 	content: "";
 	position: absolute;
 	inset: -1.5rem -1.75rem;
 	z-index: -1;
-	border-radius: 20px;
-	/* Tracing paper lightens what is under it. The tooth comes from the sheet
-	   grain behind; blending it in here only turned the veil into a grey card. */
-	background-color: color-mix(in oklab, var(--paper) 62%, transparent);
+	border-radius: 3px;
+	pointer-events: none;
+	mask-image: var(--sheet-mask);
+	mask-composite: intersect;
+	-webkit-mask-image: var(--sheet-mask);
+	-webkit-mask-composite: source-in;
+}
+
+/* The sheet itself: translucent, milky, scattering what is under it. Tracing
+   paper lightens — it never darkens — so this layer carries colour and blur
+   only. The uneven translucency is a slow mottle, because no real sheet is
+   perfectly even. */
+.column::before {
+	background-color: color-mix(in oklab, var(--paper) 60%, transparent);
+	background-image: var(--mottle);
+	background-size: 700px 700px;
+	background-blend-mode: soft-light;
 	backdrop-filter: blur(9px) saturate(1.1);
 	-webkit-backdrop-filter: blur(9px) saturate(1.1);
-	mask-image: radial-gradient(125% 115% at 50% 50%, #000 34%, transparent 100%);
+	box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ink) 7%, transparent);
+}
+
+/* The fibre, laid over the sheet. Overlay adds light and dark in equal measure,
+   which is what makes it read as texture rather than as a grey wash. */
+.column::after {
+	background-image: var(--grain-fine);
+	background-size: 120px 120px;
+	mix-blend-mode: overlay;
+	opacity: 0.55;
 }
 
 /* The tooth of the stock. It bites into the paper itself, under the grid and
