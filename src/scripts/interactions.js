@@ -5,7 +5,6 @@
  */
 export function initSheets() {
 	const stage = document.querySelector("[data-sheets-stage]");
-	const folio = document.querySelector("[data-folio]");
 	const sections = document.querySelectorAll("[data-sheet-section]");
 	if (!stage || !sections.length) return;
 
@@ -26,7 +25,6 @@ export function initSheets() {
 			}
 		});
 		stage.style.setProperty("--step", String(Number(id) - 1));
-		if (folio) folio.textContent = id;
 	};
 
 	const observer = new IntersectionObserver(

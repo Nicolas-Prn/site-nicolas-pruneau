@@ -135,12 +135,6 @@
 	</div>
 
 	<div class="grain"></div>
-
-	<div class="folio">
-		<span class="folio-label">Feuille</span>
-		<span class="folio-value" data-folio>1</span>
-		<span class="folio-total">/ 5</span>
-	</div>
 </div>
 
 <style>
@@ -281,35 +275,10 @@
 		}
 	}
 
-	/* ── Folio ── */
-
-	.folio {
-		position: absolute;
-		right: var(--gutter);
-		bottom: clamp(1rem, 3vw, 2rem);
-		display: flex;
-		align-items: baseline;
-		gap: 0.4rem;
-		font-family: var(--mono);
-		font-size: 0.6875rem;
-		letter-spacing: 0.08em;
-		color: var(--ink-soft);
-		opacity: 0.55;
-	}
-
-	.folio-value {
-		color: var(--accent);
-		font-variant-numeric: tabular-nums;
-	}
-
 	@media (max-width: 46em) {
 		/* On a phone the type owns the sheet, so the drawing steps well back. */
 		.sheets-stage {
 			opacity: 0.55;
-		}
-
-		.folio {
-			display: none;
 		}
 	}
 </style>
